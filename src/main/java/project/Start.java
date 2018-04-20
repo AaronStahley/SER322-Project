@@ -29,7 +29,10 @@ public class Start {
 		AccountsPanel accountP = new AccountsPanel(); 
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(1100, 800);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		
+		//frame.setSize(1100, 800);
+		
 		//Adds all panels to the frame. 
 		frame.getContentPane().add(header, BorderLayout.NORTH);
 		frame.getContentPane().add(leftNav, BorderLayout.WEST);
