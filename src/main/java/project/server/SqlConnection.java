@@ -17,6 +17,8 @@ public class SqlConnection{
 	
 	public Connection connectToLocal(String userName, String password, String databaseName) {
 		
+		databaseName = databaseName + "?useSSL=false";
+		
 		try{  
 			Class.forName("com.mysql.cj.jdbc.Driver");  
 			Connection con = DriverManager.getConnection(  
