@@ -2,32 +2,33 @@ package main.java.project.tables;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
-import java.util.Date;
 import java.util.Vector;
 
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
+
+import main.java.project.managers.Account;
+import main.java.project.managers.AccountsManager;
 
 public class AccountTable extends JTable {
 
-	public static final int DRIVER = 100;
-	public static final int DRIVER_ID = 101;
+	private static final long serialVersionUID = 1L;
+	public static final int ACCOUNT = 100;
+	public static final int ACCOUNT_ID = 101;
 	
-    Vector accounts = new Vector();
+    Vector accounts = new Vector(); 
     
+   
     public AccountTable() {
         super();
         setModel(new AccountTableModel());
+        AccountsManager.populateFromSQL();;
         initTable();
-        this.setShowGrid(false);
+        this.setShowGrid(true);
         this.getTableHeader().setBackground(Color.WHITE);
-        this.getTableHeader().setFont(new java.awt.Font("Dialog", 1, 15));
+        this.getTableHeader().setFont(new java.awt.Font("Dialog", 1, 20));
         TableCellRenderer rendererFromHeader = super.getTableHeader().getDefaultRenderer();
         JLabel headerLabel = (JLabel) rendererFromHeader;
         headerLabel.setHorizontalAlignment(JLabel.LEFT);
@@ -35,8 +36,9 @@ public class AccountTable extends JTable {
     
     public void initTable() {
     	
-    		//Vector of accounts
-    		//accounts = accounts.getAccounts; 
+    	//Vector of accounts
+    	accounts = (Vector) AccountsManager.getAccounts();
+    
     	
         clearSelection();
         updateUI();
@@ -57,7 +59,7 @@ public class AccountTable extends JTable {
                 		isSelected, hasFocus, row, column);
                 
                 comp.setHorizontalAlignment(LEFT);
-                //Driver dv = (Driver)getModel().getValueAt(row, DRIVER);
+                Account account = (Account)getModel().getValueAt(row, ACCOUNT );
                 comp.setForeground(java.awt.Color.BLACK);
                 comp.setFont(new java.awt.Font("Dialog", 1, 18));
                 return comp;
@@ -70,7 +72,9 @@ public class AccountTable extends JTable {
         String[] columnNames = {
         		
                 " Account ID",
-               	" Ballance",
+                " Account Type",
+               	" Balance",
+               	" Date Opened"
         };
         
         AccountTableModel() {
@@ -78,13 +82,13 @@ public class AccountTable extends JTable {
         }
 
         public int getColumnCount() {
-            return 2;
+            return 4;
         }
 
         public int getRowCount() {
             int row = 0;
             try {
-               // row = accounts.size
+               row = accounts.size();
             }
             catch(NullPointerException e) {
                 row = 1;
@@ -92,29 +96,30 @@ public class AccountTable extends JTable {
             return row;
         }
 
-        /*
+     
         public Object getValueAt(int row, int col) {
-           // Driver driver = (Driver)drivers.get(row);
+            Account account = (Account)accounts.get(row);
             if(col == 0) {
-               // return accounts.getID();
+                return account.getAccID();
             } else if(col == 1) {
-               // return accounts.getBallance();
-            }else {
-              //  return accounts;
-            	return null;
+            	return account.getAccType();
+            }else if(col == 2) {
+                return account.getBalance();
+
+            }else if(col == 3) {
+            	return account.getAccType();
             }
-        }*/
-        
+            	else {
+                return account;
+            
+            }
+        }
         
         public String getColumnName(int col) {
+        	
             return columnNames[col];
         }
 
-		@Override
-		public Object getValueAt(int rowIndex, int columnIndex) {
-			// TODO Auto-generated method stub
-			return null;
-		}
     }
 
 }

@@ -3,6 +3,12 @@ package main.java.project;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.JFrame;
 
@@ -20,6 +26,20 @@ import main.java.project.view.NavBarPanel;
 public class Start {
 
 	public static void main(String[] args) {
+		
+		Connection con = null;
+		
+		try{  
+			Class.forName("com.mysql.cj.jdbc.Driver");  
+			con=DriverManager.getConnection(  
+			"jdbc:mysql://localhost:3306/bank","root","password");  
+			
+			}catch(Exception e){ System.out.println(e);} 
+		
+		   String query = "select accID, accType, balance, dateCreated " +
+                  "from " + "bank" + ".account";
+		
+		 
 						
 		JFrame frame = new JFrame("Bank App");
 		
@@ -31,7 +51,7 @@ public class Start {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		
-		//frame.setSize(1100, 800);
+		frame.setSize(1100, 800);
 		
 		//Adds all panels to the frame. 
 		frame.getContentPane().add(header, BorderLayout.NORTH);
@@ -43,5 +63,11 @@ public class Start {
 		frame.setLocationRelativeTo(null); //Centers Frame
 		frame.setVisible(true);
 	}
+	
+	 
+
 
 }
+
+
+
