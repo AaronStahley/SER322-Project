@@ -130,7 +130,7 @@ public class AccountsPanel extends JPanel {
 		
 		balanceLbl.setText("Account Balance:");
 		balanceLbl.setFont(new java.awt.Font("Dialog", 1, 20));
-		balanceLbl.setPreferredSize(new Dimension(170,30));
+		balanceLbl.setPreferredSize(new Dimension(180,30));
 
 		balanceField.setText(null);
 		balanceField.setFont(new java.awt.Font("Dialog", 1, 18));

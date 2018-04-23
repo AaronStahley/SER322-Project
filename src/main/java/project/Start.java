@@ -51,7 +51,8 @@ public class Start {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		
-		frame.setSize(1100, 800);
+		frame.setSize(1050, 780);
+		frame.setMinimumSize(new Dimension(1160,780));
 		
 		//Adds all panels to the frame. 
 		frame.getContentPane().add(header, BorderLayout.NORTH);

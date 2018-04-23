@@ -24,7 +24,7 @@ public class AccountTable extends JTable {
     public AccountTable() {
         super();
         setModel(new AccountTableModel());
-        AccountsManager.populateFromSQL();;
+       // AccountsManager.populateFromSQL();;
         initTable();
         this.setShowGrid(true);
         this.getTableHeader().setBackground(Color.WHITE);
