@@ -24,12 +24,14 @@ public class NavBarPanel extends JPanel{
 	private JButton atmB = new JButton(); 
 	private JButton customerB = new JButton();
 	
+	private int buttonSize = 130;
+	
 	public NavBarPanel() {
 		
 		
 		//-----------Panel_Attributes-----------//
 
-		this.setPreferredSize(new Dimension(150,100));
+		this.setPreferredSize(new Dimension(130,100));
 		this.setBackground(Color.WHITE);
 		this.setLayout(new FlowLayout());
 		
@@ -40,8 +42,9 @@ public class NavBarPanel extends JPanel{
 		//----------Button_Attributes-----------//
 	
 		accountB.setIcon(new ImageIcon(NavBarPanel.class.getResource("/Accounts_Icon.png")));
+		accountB.setFont(new java.awt.Font("Dialog", 1, 15));
 		accountB.setBorderPainted(false);
-		accountB.setPreferredSize(new Dimension(150, 150));
+		accountB.setPreferredSize(new Dimension(buttonSize, buttonSize));
 		accountB.setHorizontalTextPosition(SwingConstants.CENTER);
 		accountB.setText("Accounts");
 		accountB.setVerticalAlignment(SwingConstants.TOP);
@@ -57,8 +60,9 @@ public class NavBarPanel extends JPanel{
 		});		
 		
 		employeesB.setIcon(new ImageIcon(NavBarPanel.class.getResource("/Employee_Icon.png")));
+		employeesB.setFont(new java.awt.Font("Dialog", 1, 15));
 		employeesB.setBorderPainted(false);
-		employeesB.setPreferredSize(new Dimension(150, 150));
+		employeesB.setPreferredSize(new Dimension(buttonSize, buttonSize));
 		employeesB.setHorizontalTextPosition(SwingConstants.CENTER);
 		employeesB.setText("Employees");	
 		employeesB.setVerticalAlignment(SwingConstants.TOP);
@@ -73,8 +77,9 @@ public class NavBarPanel extends JPanel{
 		});
 		
 		atmB.setIcon(new ImageIcon(NavBarPanel.class.getResource("/ATM_Icon.png")));
+		atmB.setFont(new java.awt.Font("Dialog", 1, 15));
 		atmB.setBorderPainted(false);
-		atmB.setPreferredSize(new Dimension(150, 150));
+		atmB.setPreferredSize(new Dimension(buttonSize, buttonSize));
 		atmB.setHorizontalTextPosition(SwingConstants.CENTER);
 		atmB.setText("ATM");	
 		atmB.setVerticalAlignment(SwingConstants.TOP);
@@ -89,8 +94,9 @@ public class NavBarPanel extends JPanel{
 		});
 		
 		customerB.setIcon(new ImageIcon(NavBarPanel.class.getResource("/Customer_Icon.png")));
+		customerB.setFont(new java.awt.Font("Dialog", 1, 15));
 		customerB.setBorderPainted(false);
-		customerB.setPreferredSize(new Dimension(150, 150));
+		customerB.setPreferredSize(new Dimension(buttonSize, buttonSize));
 		customerB.setHorizontalTextPosition(SwingConstants.CENTER);
 		customerB.setText("Customers");	
 		customerB.setVerticalAlignment(SwingConstants.TOP);

@@ -14,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -175,8 +176,7 @@ public class AccountsPanel extends JPanel {
 	    
 	    //--------End of Bottom Panel Attributes ----------//
 	    
-        
-       
+      
         bottomPanel.add(accIdPanel);
         bottomPanel.add(accTypePanel);
         bottomPanel.add(balancePanel);
@@ -189,19 +189,49 @@ public class AccountsPanel extends JPanel {
 	    
 	    //-------Button Action Listeners----------//
 	    
+	
 		submitB.addActionListener(new ActionListener() { 
 			  public void actionPerformed(ActionEvent e) {
 				  
-				  accountTable.refresh();
+				  //Displays an error if the fields are blank.
+				  if(isFieldsEmpty() == true) {
+					  errorPopUpBox("Please Enter a value in one of the search fields","Error");
+				  }else {
+					  
+					  accountTable.refresh();
+
+				  }
+				  
 				  
 			  } 
-			} );
+			});
 		
 		//------END of Action Listeners-----------//
 
 		
 	}
 	
+	/**
+	 * @author aaronstahley 04/23/2018
+	 * Checks to see if text fields are empty. 
+	 * @return
+	 */
+	public boolean isFieldsEmpty() {
+		
+		if(accIdField.getText().equals("") && accTypeField.getText().equals("") && balanceField.getText().equals("")
+				&& dateCreatedField.getText().equals("")) {
+			return true; 
+		}
+		
+		return false; 
+	}
+	
+	public static void errorPopUpBox(String infoMessage, String titleBar)
+	{
+		JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " +
+				titleBar, JOptionPane.ERROR_MESSAGE);
+	}
+
 
 
 }
