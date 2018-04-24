@@ -49,16 +49,18 @@ public class NavBarPanel extends JPanel{
 		accountB.setText("Accounts");
 		accountB.setVerticalAlignment(SwingConstants.TOP);
 		accountB.setVerticalTextPosition(SwingConstants.BOTTOM);
-		accountB.setOpaque(false);
+		accountB.setOpaque(true);
+		accountB.setBackground(new Color(151, 217, 247));
 		accountB.setMargin(new Insets(0, 0, 0, 0));
 		accountB.setSelected(true);
-		accountB.setContentAreaFilled(false);
+		accountB.setContentAreaFilled(true);
 		accountB.setFocusPainted(false); 
 		accountB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+					
 			}
 		});		
-		
+	
 		employeesB.setIcon(new ImageIcon(NavBarPanel.class.getResource("/Employee_Icon.png")));
 		employeesB.setFont(new java.awt.Font("Dialog", 1, 15));
 		employeesB.setBorderPainted(false);
@@ -73,6 +75,8 @@ public class NavBarPanel extends JPanel{
 		employeesB.setFocusPainted(false); 
 		employeesB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				accountB.setEnabled(false);
+
 			}
 		});
 		

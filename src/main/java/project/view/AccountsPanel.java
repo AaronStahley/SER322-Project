@@ -3,10 +3,13 @@ package main.java.project.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.awt.Color;
@@ -40,6 +43,7 @@ public class AccountsPanel extends JPanel {
 	private JPanel sortButtonsPanel = new JPanel(); 
 	private JPanel buttonPanel = new JPanel();
 	private JPanel equalityBPanel = new JPanel(); 
+	private JPanel beforeAfterPanel = new JPanel(); 
 	
 	private JLabel accIdLbl = new JLabel(); 
 	private JLabel accTypeLbl = new JLabel();
@@ -54,6 +58,8 @@ public class AccountsPanel extends JPanel {
 	private JCheckBox sortDescendingB = new JCheckBox();
 	private JCheckBox lessThanB = new JCheckBox();
 	private JCheckBox greaterThanB = new JCheckBox();
+	private JCheckBox beforeDateB = new JCheckBox();
+	private JCheckBox afterDateB = new JCheckBox(); 
 	
 	private JScrollPane scrollPane = new JScrollPane();
 	
@@ -61,7 +67,6 @@ public class AccountsPanel extends JPanel {
 	private JButton submitB = new JButton();
 	
 	private AccountTable accountTable = new AccountTable(); 
-
 	
 	public AccountsPanel() {
 		
@@ -104,6 +109,10 @@ public class AccountsPanel extends JPanel {
 		
 		dateCreatedPanel.setLayout(new FlowLayout());
 		dateCreatedPanel.setBackground(Color.WHITE);
+		
+		beforeAfterPanel.setLayout(new BorderLayout());
+		beforeAfterPanel.setPreferredSize(new Dimension(50,55));
+		beforeAfterPanel.setBackground(Color.WHITE);
 
 		sortButtonsPanel.setLayout(new FlowLayout());
 		sortButtonsPanel.setBackground(Color.WHITE);
@@ -175,8 +184,29 @@ public class AccountsPanel extends JPanel {
 		dateCreatedField.setFont(new java.awt.Font("Dialog", 1, 18));
 		dateCreatedField.setPreferredSize(new Dimension(150,30));
 		
+		beforeDateB.setText("<");
+		beforeDateB.setFont(new java.awt.Font("Dialog", 1, 18));
+		beforeDateB.setMnemonic(KeyEvent.VK_C); 
+		beforeDateB.setSelected(false);
+		beforeDateB.setHorizontalTextPosition(SwingConstants.LEFT);
+		beforeDateB.setFocusPainted(false);
+		beforeDateB.setBackground(Color.WHITE);
+		
+		afterDateB.setText(">");
+		afterDateB.setFont(new java.awt.Font("Dialog", 1, 18));
+		afterDateB.setMnemonic(KeyEvent.VK_C); 
+		afterDateB.setSelected(false);
+		afterDateB.setHorizontalTextPosition(SwingConstants.LEFT);
+		afterDateB.setFocusPainted(false);
+		afterDateB.setBackground(Color.WHITE);
+		
+		beforeAfterPanel.add(beforeDateB, BorderLayout.NORTH);
+		beforeAfterPanel.add(afterDateB, BorderLayout.SOUTH); 
+		
 		dateCreatedPanel.add(dateCreatedLbl);
 		dateCreatedPanel.add(dateCreatedField);
+		dateCreatedPanel.add(beforeAfterPanel); 
+
 		
 		sortDescendingB.setText("Sort Descending");
 		sortDescendingB.setFont(new java.awt.Font("Dialog", 1, 18));
@@ -233,6 +263,23 @@ public class AccountsPanel extends JPanel {
 			  } 
 		});
 		
+		afterDateB.addActionListener(new ActionListener() { 
+			  public void actionPerformed(ActionEvent e) {
+				  if(afterDateB.isSelected() == true) {
+					  beforeDateB.setSelected(false);
+				  }
+			  } 
+		});
+		
+		beforeDateB.addActionListener(new ActionListener() { 
+			  public void actionPerformed(ActionEvent e) {
+				  if(beforeDateB.isSelected() == true) {
+					  afterDateB.setSelected(false);
+				  }
+			  } 
+		});
+		
+		
 		clearB.addActionListener(new ActionListener() { 
 			  public void actionPerformed(ActionEvent e) {
 				  clearAllFields();
@@ -249,7 +296,8 @@ public class AccountsPanel extends JPanel {
 					  
 					  getAccountID();
 					  getAccountTypes();
-					  accountBalanceFields();			  
+					  accountBalanceFields();
+					  getAccountDates();
 					  accountTable.refresh();
 
 				  }	  
@@ -329,6 +377,10 @@ public class AccountsPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * @author aaronstahley 04/23/2018
+	 * gets account types matching (checking, savings etc..)
+	 */
 	public void getAccountTypes() {
 		if(accTypeField.getText().equals("")) {
 			
@@ -337,6 +389,47 @@ public class AccountsPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * gets accounts created on date in text field. 
+	 */
+	public void getAccountDates() {
+		
+		String testDate = dateCreatedField.getText();
+		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+	
+		if(dateCreatedField.getText().equals("")) {
+			
+		}else if(afterDateB.isSelected() == true){
+		
+			try {
+				Date date = formatter.parse(testDate);
+				AccountsManager.getAccountDateAfter(date);
+			} catch (ParseException e) {
+				errorPopUpBox("Date must be in format yyyy-mm-dd","Formating Error");
+				e.printStackTrace();
+			}
+				   
+		}else if(beforeDateB.isSelected() == true) {
+			
+			try {
+				Date date = formatter.parse(testDate);
+				AccountsManager.getAccountDateBefore(date);
+			} catch (ParseException e) {
+				errorPopUpBox("Date must be in format yyyy-mm-dd","Formating Error");
+				e.printStackTrace();
+			}
+			
+		}else {
+			
+			try {
+				Date date = formatter.parse(testDate);
+				AccountsManager.getAccountCreatedOn(date);
+			} catch (ParseException e) {
+				errorPopUpBox("Date must be in format yyyy-mm-dd","Formating Error");
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	public static void errorPopUpBox(String infoMessage, String titleBar)
 	{
@@ -363,8 +456,7 @@ public class AccountsPanel extends JPanel {
         
         return isMatch;
     }
-	
-
+    
 
 
 

@@ -117,7 +117,7 @@ public class AccountTable extends JTable {
                 return account.getBalance();
 
             }else if(col == 3) {
-            	return account.getAccType();
+            	return account.getDateCreated();
             }
             	else {
                 return account;

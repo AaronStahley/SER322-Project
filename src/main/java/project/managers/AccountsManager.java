@@ -1,7 +1,6 @@
 package main.java.project.managers;
 
 import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -104,8 +103,8 @@ public class AccountsManager {
 	}
 	
 	/**
-	 * @author Aaron Stahley 4/23/2018
 	 * Gets accounts with balance equal to value.
+	 * @author Aaron Stahley 4/23/2018
 	 * @param value number you want to find accounts equal to
 	 */
 	public static void getAcountsBalance(int value) {
@@ -130,6 +129,7 @@ public class AccountsManager {
 		    }
 	
 		}
+	
 	
 	/**
 	 * Returns Accounts with ID matching the given input. 
@@ -188,7 +188,99 @@ public class AccountsManager {
 		    }
 	
 		}
+	
+	/**
+	 * Returns all accounts created after specified date
+	 * @author aaronstahley 04/23/2018
+	 * @param date 
+	 */
+	public static void getAccountDateAfter(java.util.Date date) {
 		
+		
+	    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+		
+		accounts.clear();
+
+		String query = "SELECT accID, accType, balance, dateCreated " +
+	               "FROM " + "bank" + ".account Where dateCreated >" + "'" + sqlDate + "'";
+
+		try {
+			
+			Statement stmt = con.getConnection().createStatement();
+		    ResultSet rs = stmt.executeQuery(query);
+	        while (rs.next()) {
+	        	accounts.addElement(new Account(rs.getInt("accID"),rs.getString("accType"),
+	        			 rs.getFloat("balance"),rs.getDate("dateCreated")));
+	        
+	        }
+	     
+	    } catch (SQLException e ) {
+	    	System.out.println("QUERY WRONG - getAccountDateAfter");
+	    }
+
+	}
+	
+	/**
+	 * Returns all accounts created before specified date
+	 * @author aaronstahley 04/23/2018
+	 * @param date
+	 */
+	public static void getAccountDateBefore(java.util.Date date) {
+			
+			
+		    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+			
+			accounts.clear();
+	
+			String query = "SELECT accID, accType, balance, dateCreated " +
+		               "FROM " + "bank" + ".account Where dateCreated <" + "'" + sqlDate + "'";
+	
+			try {
+				
+				Statement stmt = con.getConnection().createStatement();
+			    ResultSet rs = stmt.executeQuery(query);
+		        while (rs.next()) {
+		        	accounts.addElement(new Account(rs.getInt("accID"),rs.getString("accType"),
+		        			 rs.getFloat("balance"),rs.getDate("dateCreated")));
+		        
+		        }
+		     
+		    } catch (SQLException e ) {
+		    	System.out.println("QUERY WRONG - getAccountDateBefore");
+		    }
+	
+		}
+		
+	/**
+	 * Returns all accounts created on specified date
+	 * @author aaronstahley 04/23/2018
+	 * @param date
+	 */
+	public static void getAccountCreatedOn(java.util.Date date) {
+		
+	
+	    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+		
+		accounts.clear();
+
+		String query = "SELECT accID, accType, balance, dateCreated " +
+	               "FROM " + "bank" + ".account Where dateCreated =" + "'" + sqlDate + "'";
+
+		try {
+			
+			Statement stmt = con.getConnection().createStatement();
+		    ResultSet rs = stmt.executeQuery(query);
+	        while (rs.next()) {
+	        	accounts.addElement(new Account(rs.getInt("accID"),rs.getString("accType"),
+	        			 rs.getFloat("balance"),rs.getDate("dateCreated")));
+	        
+	        }
+	     
+	    } catch (SQLException e ) {
+	    	System.out.println("QUERY WRONG - getAccountCreatedOn");
+	    }
+
+	}
 		
 		
 	/**
