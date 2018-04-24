@@ -52,7 +52,7 @@ public class Start {
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		
 		frame.setSize(1050, 780);
-		frame.setMinimumSize(new Dimension(1160,780));
+		frame.setMinimumSize(new Dimension(1220,780));
 		
 		//Adds all panels to the frame. 
 		frame.getContentPane().add(header, BorderLayout.NORTH);

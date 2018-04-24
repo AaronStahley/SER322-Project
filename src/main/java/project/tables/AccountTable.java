@@ -5,12 +5,14 @@ import java.awt.Component;
 import java.util.Vector;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import main.java.project.managers.Account;
 import main.java.project.managers.AccountsManager;
+import main.java.project.server.SqlConnection;
 
 public class AccountTable extends JTable {
 
@@ -18,13 +20,21 @@ public class AccountTable extends JTable {
 	public static final int ACCOUNT = 100;
 	public static final int ACCOUNT_ID = 101;
 	
+	SqlConnection con = new SqlConnection(); 
+	
     Vector accounts = new Vector(); 
     
    
     public AccountTable() {
         super();
         setModel(new AccountTableModel());
-       // AccountsManager.populateFromSQL();;
+        
+        if(con.isConnected() == true) {    	
+             AccountsManager.populateFromSQL();
+        }else {
+        	errorPopUpBox("No Database Conection established","Error");
+        }
+        
         initTable();
         this.setShowGrid(true);
         this.getTableHeader().setBackground(Color.WHITE);
@@ -121,5 +131,11 @@ public class AccountTable extends JTable {
         }
 
     }
+    
+    public static void errorPopUpBox(String infoMessage, String titleBar)
+	{
+		JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " +
+				titleBar, JOptionPane.ERROR_MESSAGE);
+	}
 
 }
