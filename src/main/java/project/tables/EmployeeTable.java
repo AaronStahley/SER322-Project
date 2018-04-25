@@ -28,7 +28,8 @@ public class EmployeeTable extends JTable{
     public EmployeeTable() {
         super();
         setModel(new EmployeeTableModel());
-        
+        this.setSelectionBackground(new Color(151, 217, 247));
+
         if(con.isConnected() == true) {    	
              EmployeesManager.populateFromSQL();
         }else {

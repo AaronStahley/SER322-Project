@@ -10,47 +10,44 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 
-import main.java.project.managers.Atm;
-import main.java.project.managers.AtmManager;
-import main.java.project.managers.Employee;
-import main.java.project.managers.EmployeesManager;
+import main.java.project.managers.Customer;
+import main.java.project.managers.CustomersManager;
 import main.java.project.server.SqlConnection;
-import main.java.project.tables.EmployeeTable.EmployeeTableModel;
 
-public class AtmTable extends JTable {
-
+public class CustomerTable extends JTable{
+	
 	private static final long serialVersionUID = 1L;
-	public static final int ATM = 100;
-	public static final int ATM_ID = 101;
+	public static final int CUSTOMER = 100;
+	public static final int CUSTOMER_ID = 101;
 	
 	SqlConnection con = new SqlConnection(); 
-		
-	Vector atms = new Vector(); 
 	
-	public AtmTable() {
-		 super();
-	        setModel(new AtmTableModel());
-	        this.setSelectionBackground(new Color(151, 217, 247));
+    Vector customers = new Vector(); 
+    
+    public CustomerTable() {
+    		 super();
+         setModel(new CustomerTableModel());
+         this.setSelectionBackground(new Color(151, 217, 247));
 
-	        if(con.isConnected() == true) {    	
-	             AtmManager.populateFromSQL();
-	        }else {
-	        	errorPopUpBox("No Database Conection established","Error");
-	        }
-	        
-	        initTable();
-	        this.setShowGrid(true);
-	        this.getTableHeader().setBackground(Color.WHITE);
-	        this.getTableHeader().setFont(new java.awt.Font("Dialog", 1, 20));
-	        TableCellRenderer rendererFromHeader = super.getTableHeader().getDefaultRenderer();
-	        JLabel headerLabel = (JLabel) rendererFromHeader;
-	        headerLabel.setHorizontalAlignment(JLabel.LEFT);
-	    }
-	    
-	    public void initTable() {
+         if(con.isConnected() == true) {    	
+              CustomersManager.populateFromSQL();
+         }else {
+         	errorPopUpBox("No Database Conection established","Error");
+         }
+         
+         initTable();
+         this.setShowGrid(true);
+         this.getTableHeader().setBackground(Color.WHITE);
+         this.getTableHeader().setFont(new java.awt.Font("Dialog", 1, 20));
+         TableCellRenderer rendererFromHeader = super.getTableHeader().getDefaultRenderer();
+         JLabel headerLabel = (JLabel) rendererFromHeader;
+         headerLabel.setHorizontalAlignment(JLabel.LEFT);
+    }
+    
+	public void initTable() {
 	    	
 	    	//Vector of accounts
-	    	atms = (Vector) AtmManager.getAtms();
+	    	customers = (Vector) CustomersManager.getCustomers();
 	    
 	    	
 	        clearSelection();
@@ -72,72 +69,80 @@ public class AtmTable extends JTable {
 	                		isSelected, hasFocus, row, column);
 	                
 	                comp.setHorizontalAlignment(LEFT);
-	                Atm atm = (Atm)getModel().getValueAt(row, ATM );
+	                Customer customer = (Customer)getModel().getValueAt(row, CUSTOMER );
 	                comp.setForeground(java.awt.Color.BLACK);
 	                comp.setFont(new java.awt.Font("Dialog", 1, 18));
 	                return comp;
 	            }
 	        };
-
+	
 	    }
-
-	    class AtmTableModel extends AbstractTableModel {
+	
+	    class CustomerTableModel extends AbstractTableModel {
 	        String[] columnNames = {
-	        		
-	                " Atm ID",
-	                " Branch ID",
-	               	" Balance",
-	               	" Max Cash",
+	        			
+	                " SSN",
+	                " Account ID",
+	               	" First Name",
+	               	" Last Name",
+	               	" Date Joined",
+	               	" Date Of Birth",
 	               	" Street Number",
 	               	" Street Name",
 	               	" City",
 	               	" State",
-	               	" Zip Code"
+	               	" Zip Code",
+	               	" Email"
 	        };
 	        
-	        AtmTableModel() {
+	        CustomerTableModel() {
 	            super();
 	        }
-
+	
 	        public int getColumnCount() {
-	            return 9;
+	            return 12;
 	        }
-
+	
 	        public int getRowCount() {
 	            int row = 0;
 	            try {
-	               row = atms.size();
+	               row = customers.size();
 	            }
 	            catch(NullPointerException e) {
 	                row = 1;
 	            }
 	            return row;
 	        }
-
+	
 	     
 	        public Object getValueAt(int row, int col) {
-	            Atm atm = (Atm)atms.get(row);
+	            Customer customer = (Customer)customers.get(row);
 	            if(col == 0) {
-	                return atm.getAtmID();
+	                return customer.getSSN();
 	            } else if(col == 1) {
-	            	return atm.getBranchID();
+	            	return customer.getAccID();
 	            }else if(col == 2) {
-	                return atm.getBalance();
+	                return customer.getfName();
 	            }else if(col == 3) {
-	            	return atm.getMaxCash();
+	            		return customer.getlName();
 	            }else if(col == 4) {
-	            	return atm.getStNum();
+	           		return customer.getDateJoined();
 	            }else if(col == 5) {
-	            	return atm.getStName();
+	            		return customer.getDob();
 	            }else if(col == 6) {
-	            	return atm.getCity();
+	            		return customer.getStNum();
 	            }else if(col == 7) {
-	            	return atm.getState();
+	            		return customer.getStName();
 	            }else if(col == 8) {
-	            	return atm.getZip(); 
+	            		return customer.getCity();
+	            }else if(col == 9) {
+	            		return customer.getStates();
+	            }else if(col == 10) {
+	            		return customer.getZip();
+	            }else if(col == 11) {
+	            		return customer.getEmail();
 	            }else {
-	                return atm;
-	            
+	                return customer;        
 	            }
 	        }
 	        
@@ -145,7 +150,7 @@ public class AtmTable extends JTable {
 	        	
 	            return columnNames[col];
 	        }
-
+	
 	    }
 	    
 	    public static void errorPopUpBox(String infoMessage, String titleBar)
@@ -153,5 +158,6 @@ public class AtmTable extends JTable {
 			JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " +
 					titleBar, JOptionPane.ERROR_MESSAGE);
 		}
+	    
 
 }

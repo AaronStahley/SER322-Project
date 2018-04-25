@@ -28,7 +28,7 @@ public class AccountTable extends JTable {
     public AccountTable() {
         super();
         setModel(new AccountTableModel());
-        
+        this.setSelectionBackground(new Color(151, 217, 247));
         if(con.isConnected() == true) {    	
              AccountsManager.populateFromSQL();
         }else {

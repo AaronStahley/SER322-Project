@@ -232,7 +232,7 @@ public class AtmPanel extends JPanel{
 		
 		zipLbl.setText("Zip Code:");
 		zipLbl.setFont(new java.awt.Font("Dialog", 1, 20));
-		zipLbl.setPreferredSize(new Dimension(95, 30));
+		zipLbl.setPreferredSize(new Dimension(100, 30));
 		
 		zipField.setText(null);
 		zipField.setFont(new java.awt.Font("Dialog", 1, 18));
