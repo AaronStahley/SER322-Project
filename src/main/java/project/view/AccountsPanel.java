@@ -87,13 +87,11 @@ public class AccountsPanel extends JPanel {
 		fl.setVgap(10); // Gap of components vertical
 		
 		
-		bottomPanel.setPreferredSize(new Dimension(100,130));
+		bottomPanel.setPreferredSize(new Dimension(100,150));
 		bottomPanel.setLayout(fl);
 		bottomPanel.setBackground(Color.WHITE);
 		bottomPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		
-		
-		
+	
 		accIdPanel.setLayout(new FlowLayout());
 		accIdPanel.setBackground(Color.WHITE);
 		
@@ -455,6 +453,22 @@ public class AccountsPanel extends JPanel {
         boolean isMatch = matcher.matches();
         
         return isMatch;
+    }
+    
+ 
+    
+    public void removePanel() {
+    	
+    	 this.removeAll();
+    	 this.revalidate();
+		 this.repaint();
+    }
+    
+    public void addPanel() {
+    	
+    	
+    	this.add(scrollPane, BorderLayout.CENTER);
+	    this.add(bottomPanel, BorderLayout.SOUTH);
     }
     
 

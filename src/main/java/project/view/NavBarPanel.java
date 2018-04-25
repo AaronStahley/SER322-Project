@@ -14,6 +14,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import main.java.project.Start;
+
 public class NavBarPanel extends JPanel{
 
 	private static final long serialVersionUID = 1L;
@@ -31,7 +33,7 @@ public class NavBarPanel extends JPanel{
 		
 		//-----------Panel_Attributes-----------//
 
-		this.setPreferredSize(new Dimension(130,100));
+		this.setPreferredSize(new Dimension(130,1000));
 		this.setBackground(Color.WHITE);
 		this.setLayout(new FlowLayout());
 		
@@ -57,7 +59,20 @@ public class NavBarPanel extends JPanel{
 		accountB.setFocusPainted(false); 
 		accountB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					
+				
+				Start.switchFrames(1);
+				
+				accountB.setOpaque(true);
+				accountB.setContentAreaFilled(true);
+				
+				employeesB.setOpaque(false);
+				employeesB.setContentAreaFilled(false);
+				
+				atmB.setOpaque(false);
+				atmB.setContentAreaFilled(false);
+				
+				customerB.setOpaque(false);
+				customerB.setContentAreaFilled(false);
 			}
 		});		
 	
@@ -70,12 +85,26 @@ public class NavBarPanel extends JPanel{
 		employeesB.setVerticalAlignment(SwingConstants.TOP);
 		employeesB.setVerticalTextPosition(SwingConstants.BOTTOM);
 		employeesB.setOpaque(false);
+		employeesB.setBackground(new Color(151, 217, 247));
 		employeesB.setMargin(new Insets(0, 0, 0, 0));
 		employeesB.setContentAreaFilled(false);
 		employeesB.setFocusPainted(false); 
 		employeesB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				accountB.setEnabled(false);
+				
+				Start.switchFrames(2);
+
+				accountB.setOpaque(false);
+				accountB.setContentAreaFilled(false);
+				
+				employeesB.setOpaque(true);
+				employeesB.setContentAreaFilled(true);
+				
+				atmB.setOpaque(false);
+				atmB.setContentAreaFilled(false);
+				
+				customerB.setOpaque(false);
+				customerB.setContentAreaFilled(false);
 
 			}
 		});
@@ -89,11 +118,25 @@ public class NavBarPanel extends JPanel{
 		atmB.setVerticalAlignment(SwingConstants.TOP);
 		atmB.setVerticalTextPosition(SwingConstants.BOTTOM);
 		atmB.setOpaque(false);
+		atmB.setBackground(new Color(151, 217, 247));
 		atmB.setMargin(new Insets(0, 0, 0, 0));
 		atmB.setContentAreaFilled(false);
 		atmB.setFocusPainted(false); 
 		atmB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Start.switchFrames(3);
+
+				accountB.setOpaque(false);
+				accountB.setContentAreaFilled(false);
+				
+				employeesB.setOpaque(false);
+				employeesB.setContentAreaFilled(false);
+				
+				atmB.setOpaque(true);
+				atmB.setContentAreaFilled(true);
+				
+				customerB.setOpaque(false);
+				customerB.setContentAreaFilled(false);
 			}
 		});
 		
@@ -106,11 +149,26 @@ public class NavBarPanel extends JPanel{
 		customerB.setVerticalAlignment(SwingConstants.TOP);
 		customerB.setVerticalTextPosition(SwingConstants.BOTTOM);
 		customerB.setOpaque(false);
+		customerB.setBackground(new Color(151, 217, 247));
 		customerB.setMargin(new Insets(0, 0, 0, 0));
 		customerB.setContentAreaFilled(false);
 		customerB.setFocusPainted(false); 
 		customerB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Start.switchFrames(4);
+				
+				accountB.setOpaque(false);
+				accountB.setContentAreaFilled(false);
+				
+				employeesB.setOpaque(false);
+				employeesB.setContentAreaFilled(false);
+				
+				atmB.setOpaque(false);
+				atmB.setContentAreaFilled(false);
+				
+				customerB.setOpaque(true);
+				customerB.setContentAreaFilled(true);
+
 			}
 		});
 		
