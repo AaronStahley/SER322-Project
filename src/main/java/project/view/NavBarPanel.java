@@ -54,7 +54,7 @@ public class NavBarPanel extends JPanel{
 		accountB.setOpaque(true);
 		accountB.setBackground(new Color(151, 217, 247));
 		accountB.setMargin(new Insets(0, 0, 0, 0));
-		accountB.setSelected(true);
+		accountB.setSelected(false);
 		accountB.setContentAreaFilled(true);
 		accountB.setFocusPainted(false); 
 		accountB.addActionListener(new java.awt.event.ActionListener() {
