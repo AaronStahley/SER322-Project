@@ -24,7 +24,7 @@ public class AtmManager {
 			atms.clear();
 			
 			String query = "select atmID, branchID, balance, maxCash, stNum, stName, city, states, zip " +
-							"from " + "bank" + ".ATM";
+							"from " + "ser322" + ".ATM";
 			 	
 			try {
 		        Statement stmt = con.getConnection().createStatement();

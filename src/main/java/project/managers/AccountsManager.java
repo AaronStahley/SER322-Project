@@ -29,7 +29,7 @@ public class AccountsManager {
 
 		
 		String query = "select accID, accType, balance, dateCreated " +
-	               "from " + "bank" + ".account";
+	               "from " + "ser322" + ".account";
 		 	
 		try {
 	        Statement stmt = con.getConnection().createStatement();
@@ -56,7 +56,7 @@ public class AccountsManager {
 		accounts.clear();
 
 		String query = "SELECT accID, accType, balance, dateCreated " +
-	               "FROM " + "bank" + ".account Where balance >" + value;
+	               "FROM " + "ser322" + ".account Where balance >" + value;
 
 		try {
 			
@@ -84,7 +84,7 @@ public class AccountsManager {
 		accounts.clear();
 
 		String query = "SELECT accID, accType, balance, dateCreated " +
-	               "FROM " + "bank" + ".account Where balance <" + value;
+	               "FROM " + "ser322" + ".account Where balance <" + value;
 
 		try {
 			
@@ -112,7 +112,7 @@ public class AccountsManager {
 			accounts.clear();
 	
 			String query = "SELECT accID, accType, balance, dateCreated " +
-		               "FROM " + "bank" + ".account Where balance =" + value;
+		               "FROM " + "ser322" + ".account Where balance =" + value;
 	
 			try {
 				
@@ -143,7 +143,7 @@ public class AccountsManager {
 		accounts.clear();
 
 		String query = "SELECT accID, accType, balance, dateCreated " +
-	               "FROM " + "bank" + ".account Where accID =" + accID;
+	               "FROM " + "ser322" + ".account Where accID =" + accID;
 
 		try {
 			
@@ -171,7 +171,7 @@ public class AccountsManager {
 			accounts.clear();
 	
 			String query = "SELECT accID, accType, balance, dateCreated " +
-		               "FROM " + "bank" + ".account Where accType =" + "'" + accType + "'";
+		               "FROM " + "ser322" + ".account Where accType =" + "'" + accType + "'";
 	
 			try {
 				
@@ -202,7 +202,7 @@ public class AccountsManager {
 		accounts.clear();
 
 		String query = "SELECT accID, accType, balance, dateCreated " +
-	               "FROM " + "bank" + ".account Where dateCreated >" + "'" + sqlDate + "'";
+	               "FROM " + "ser322" + ".account Where dateCreated >" + "'" + sqlDate + "'";
 
 		try {
 			
@@ -233,7 +233,7 @@ public class AccountsManager {
 			accounts.clear();
 	
 			String query = "SELECT accID, accType, balance, dateCreated " +
-		               "FROM " + "bank" + ".account Where dateCreated <" + "'" + sqlDate + "'";
+		               "FROM " + "ser322" + ".account Where dateCreated <" + "'" + sqlDate + "'";
 	
 			try {
 				
@@ -264,7 +264,7 @@ public class AccountsManager {
 		accounts.clear();
 
 		String query = "SELECT accID, accType, balance, dateCreated " +
-	               "FROM " + "bank" + ".account Where dateCreated =" + "'" + sqlDate + "'";
+	               "FROM " + "ser322" + ".account Where dateCreated =" + "'" + sqlDate + "'";
 
 		try {
 			

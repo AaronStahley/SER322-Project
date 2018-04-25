@@ -24,7 +24,7 @@ public class EmployeesManager {
 		employees.clear();
 		
 		String query = "select empID, SSN, FName, lName, stNum, stName, city, states, zip " +
-	               "from " + "bank" + ".employees";
+	               "from " + "ser322" + ".employees";
 		 	
 		try {
 	        Statement stmt = con.getConnection().createStatement();
