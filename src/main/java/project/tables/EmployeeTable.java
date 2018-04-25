@@ -85,6 +85,7 @@ public class EmployeeTable extends JTable{
                 " SSN",
                	" First Name",
                	" Last Name",
+               	" Street Number",
                	" Street Name",
                	" City",
                	" State",
@@ -96,7 +97,7 @@ public class EmployeeTable extends JTable{
         }
 
         public int getColumnCount() {
-            return 8;
+            return 9;
         }
 
         public int getRowCount() {

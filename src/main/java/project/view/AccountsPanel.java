@@ -457,20 +457,6 @@ public class AccountsPanel extends JPanel {
     
  
     
-    public void removePanel() {
-    	
-    	 this.removeAll();
-    	 this.revalidate();
-		 this.repaint();
-    }
-    
-    public void addPanel() {
-    	
-    	
-    	this.add(scrollPane, BorderLayout.CENTER);
-	    this.add(bottomPanel, BorderLayout.SOUTH);
-    }
-    
 
 
 

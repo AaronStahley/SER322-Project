@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -13,17 +14,19 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
-import main.java.project.tables.AccountTable;
+import main.java.project.tables.AtmTable;
 import main.java.project.tables.EmployeeTable;
 
-public class EmployeesPanel extends JPanel {
+public class AtmPanel extends JPanel{
 	
 	private JPanel bottomPanel = new JPanel();
-	private JPanel empIdPanel = new JPanel(); 
-	private JPanel ssnPanel = new JPanel(); 
-	private JPanel fNamePanel = new JPanel();
-	private JPanel lNamePanel = new JPanel(); 
+	private JPanel atmIdPanel = new JPanel(); 
+	private JPanel branchIdPanel = new JPanel(); 
+	private JPanel balancePanel = new JPanel();
+	private JPanel balanceEqBPanel = new JPanel(); 
+	private JPanel maxCashPanel = new JPanel(); 
 	private JPanel stNumPanel = new JPanel(); 
 	private JPanel stNamePanel = new JPanel(); 
 	private JPanel cityPanel = new JPanel();
@@ -31,21 +34,20 @@ public class EmployeesPanel extends JPanel {
 	private JPanel zipPanel = new JPanel();	
 	private JPanel buttonPanel = new JPanel();
 
-
-	private JLabel empIdLbl = new JLabel(); 
-	private JLabel ssnLbl = new JLabel();
-	private JLabel fNameLbl = new JLabel();
-	private JLabel lNameLbl = new JLabel();
+	private JLabel atmIdLbl = new JLabel(); 
+	private JLabel branchIdLbl = new JLabel();
+	private JLabel balanceLbl = new JLabel();
+	private JLabel maxCashLbl = new JLabel();
 	private JLabel stNumLbl = new JLabel();
 	private JLabel stNameLbl = new JLabel();
 	private JLabel cityLbl = new JLabel();
 	private JLabel statesLbl = new JLabel();
 	private JLabel zipLbl = new JLabel();
 
-	private JTextField empIdField = new JTextField();
-	private JTextField ssnField = new JTextField(); 
-	private JTextField fNameField = new JTextField();
-	private JTextField lNameField = new JTextField();
+	private JTextField atmIdField = new JTextField();
+	private JTextField branchIdField = new JTextField(); 
+	private JTextField balanceField = new JTextField();
+	private JTextField maxCashField = new JTextField();
 	private JTextField stNumField = new JTextField();
 	private JTextField stNameField = new JTextField();
 	private JTextField cityField = new JTextField();
@@ -53,47 +55,53 @@ public class EmployeesPanel extends JPanel {
 	private JTextField zipField = new JTextField();
 
 	//private JCheckBox sortDescendingB = new JCheckBox();
+	private JCheckBox balanceLessB = new JCheckBox();
+	private JCheckBox balanceGreaterB = new JCheckBox();
 	
 	private JScrollPane scrollPane = new JScrollPane();
 	
 	private JButton clearB = new JButton(); 
 	private JButton submitB = new JButton();
 	
-	private EmployeeTable employeeTable = new EmployeeTable(); 
+	private AtmTable atmTable = new AtmTable(); 
 	
-	public EmployeesPanel() {
+	public AtmPanel() {
 		
 		this.setPreferredSize(new Dimension(1000,1000));
 		this.setBackground(Color.WHITE);		
 		this.setLayout(new BorderLayout());
 		
 		scrollPane.setBorder(BorderFactory.createMatteBorder(0, 1, 1, 0, Color.BLACK));
-        scrollPane.getViewport().add(employeeTable, null);
+        scrollPane.getViewport().add(atmTable, null);
         
-        employeeTable.setBackground(Color.WHITE);
-        employeeTable.setMaximumSize(new Dimension(32767, 32767));
-        employeeTable.setRowHeight(24);
+        atmTable.setBackground(Color.WHITE);
+        atmTable.setMaximumSize(new Dimension(32767, 32767));
+        atmTable.setRowHeight(24);
         
         FlowLayout fl = new FlowLayout();
 		fl.setHgap(20); //Gap of components horizontal
 		fl.setVgap(10); // Gap of components vertical
 		
-		bottomPanel.setPreferredSize(new Dimension(100,210));
+		bottomPanel.setPreferredSize(new Dimension(100,235));
 		bottomPanel.setLayout(fl);
 		bottomPanel.setBackground(Color.WHITE);
 		bottomPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		
-		empIdPanel.setLayout(new FlowLayout());
-		empIdPanel.setBackground(Color.WHITE);
+		atmIdPanel.setLayout(new FlowLayout());
+		atmIdPanel.setBackground(Color.WHITE);
 		
-		ssnPanel.setLayout(new FlowLayout());
-		ssnPanel.setBackground(Color.WHITE);
+		branchIdPanel.setLayout(new FlowLayout());
+		branchIdPanel.setBackground(Color.WHITE);
 		
-		fNamePanel.setLayout(new FlowLayout());
-		fNamePanel.setBackground(Color.WHITE);
+		balancePanel.setLayout(new FlowLayout());
+		balancePanel.setBackground(Color.WHITE);
 		
-		lNamePanel.setLayout(new FlowLayout());
-		lNamePanel.setBackground(Color.WHITE);
+		balanceEqBPanel.setLayout(new BorderLayout());
+		balanceEqBPanel.setPreferredSize(new Dimension(50,55));
+		balanceEqBPanel.setBackground(Color.white);
+		
+		maxCashPanel.setLayout(new FlowLayout());
+		maxCashPanel.setBackground(Color.WHITE);
 		
 		stNumPanel.setLayout(new FlowLayout());
 		stNumPanel.setBackground(Color.WHITE);
@@ -113,53 +121,70 @@ public class EmployeesPanel extends JPanel {
 		buttonPanel.setLayout(fl);
 		buttonPanel.setBackground(Color.WHITE); 
 		
-		
-		
 		//-------------Bottom Panel Attributes--------------//
-
-		empIdLbl.setText("Employee ID:");
-		empIdLbl.setFont(new java.awt.Font("Dialog", 1, 20));
-		empIdLbl.setPreferredSize(new Dimension(130, 30));
 		
-		empIdField.setText(null);
-		empIdField.setFont(new java.awt.Font("Dialog", 1, 18));
-		empIdField.setPreferredSize(new Dimension(150,30));
+		atmIdLbl.setText("Atm ID:");
+		atmIdLbl.setFont(new java.awt.Font("Dialog", 1, 20));
+		atmIdLbl.setPreferredSize(new Dimension(80, 30));
 		
-		empIdPanel.add(empIdLbl);
-		empIdPanel.add(empIdField);
+		atmIdField.setText(null);
+		atmIdField.setFont(new java.awt.Font("Dialog", 1, 18));
+		atmIdField.setPreferredSize(new Dimension(150,30));
 		
-		ssnLbl.setText("Employee SSN:");
-		ssnLbl.setFont(new java.awt.Font("Dialog", 1, 20));
-		ssnLbl.setPreferredSize(new Dimension(150, 30));
+		atmIdPanel.add(atmIdLbl);
+		atmIdPanel.add(atmIdField);
 		
-		ssnField.setText(null);
-		ssnField.setFont(new java.awt.Font("Dialog", 1, 18));
-		ssnField.setPreferredSize(new Dimension(150,30));
+		branchIdLbl.setText("Branch ID:");
+		branchIdLbl.setFont(new java.awt.Font("Dialog", 1, 20));
+		branchIdLbl.setPreferredSize(new Dimension(105, 30));
 		
-		ssnPanel.add(ssnLbl);
-		ssnPanel.add(ssnField);
+		branchIdField.setText(null);
+		branchIdField.setFont(new java.awt.Font("Dialog", 1, 18));
+		branchIdField.setPreferredSize(new Dimension(150,30));
 		
-		fNameLbl.setText("First Name:");
-		fNameLbl.setFont(new java.awt.Font("Dialog", 1, 20));
-		fNameLbl.setPreferredSize(new Dimension(120, 30));
+		branchIdPanel.add(branchIdLbl);
+		branchIdPanel.add(branchIdField);
 		
-		fNameField.setText(null);
-		fNameField.setFont(new java.awt.Font("Dialog", 1, 18));
-		fNameField.setPreferredSize(new Dimension(150,30));
+		balanceLbl.setText("Balance:");
+		balanceLbl.setFont(new java.awt.Font("Dialog", 1, 20));
+		balanceLbl.setPreferredSize(new Dimension(90, 30));
 		
-		fNamePanel.add(fNameLbl);
-		fNamePanel.add(fNameField);
+		balanceField.setText(null);
+		balanceField.setFont(new java.awt.Font("Dialog", 1, 18));
+		balanceField.setPreferredSize(new Dimension(150,30));
 		
-		lNameLbl.setText("Last Name:");
-		lNameLbl.setFont(new java.awt.Font("Dialog", 1, 20));
-		lNameLbl.setPreferredSize(new Dimension(120, 30));
+		balanceGreaterB.setText(">");
+		balanceGreaterB.setFont(new java.awt.Font("Dialog", 1, 18));
+		balanceGreaterB.setMnemonic(KeyEvent.VK_C); 
+		balanceGreaterB.setSelected(false);
+		balanceGreaterB.setHorizontalTextPosition(SwingConstants.LEFT);
+		balanceGreaterB.setFocusPainted(false);
+		balanceGreaterB.setBackground(Color.WHITE);
 		
-		lNameField.setText(null);
-		lNameField.setFont(new java.awt.Font("Dialog", 1, 18));
-		lNameField.setPreferredSize(new Dimension(150,30));
+		balanceLessB.setText("<");
+		balanceLessB.setFont(new java.awt.Font("Dialog", 1, 18));
+		balanceLessB.setMnemonic(KeyEvent.VK_C); 
+		balanceLessB.setSelected(false);
+		balanceLessB.setHorizontalTextPosition(SwingConstants.LEFT);
+		balanceLessB.setFocusPainted(false);
+		balanceLessB.setBackground(Color.WHITE);
 		
-		lNamePanel.add(lNameLbl);
-		lNamePanel.add(lNameField);
+		balanceEqBPanel.add(balanceGreaterB, BorderLayout.NORTH);
+		balanceEqBPanel.add(balanceLessB, BorderLayout.SOUTH);
+		balancePanel.add(balanceLbl);
+		balancePanel.add(balanceField);
+		balancePanel.add(balanceEqBPanel);
+		
+		maxCashLbl.setText("Max Cash:");
+		maxCashLbl.setFont(new java.awt.Font("Dialog", 1, 20));
+		maxCashLbl.setPreferredSize(new Dimension(105, 30));
+		
+		maxCashField.setText(null);
+		maxCashField.setFont(new java.awt.Font("Dialog", 1, 18));
+		maxCashField.setPreferredSize(new Dimension(150,30));
+		
+		maxCashPanel.add(maxCashLbl);
+		maxCashPanel.add(maxCashField);
 		
 		stNumLbl.setText("Street Number:");
 		stNumLbl.setFont(new java.awt.Font("Dialog", 1, 20));
@@ -229,10 +254,10 @@ public class EmployeesPanel extends JPanel {
 		
 	    //--------End of Bottom Panel Attributes ----------//
 
-		bottomPanel.add(empIdPanel);
-		bottomPanel.add(ssnPanel);
-		bottomPanel.add(fNamePanel);
-		bottomPanel.add(lNamePanel);
+		bottomPanel.add(atmIdPanel);
+		bottomPanel.add(branchIdPanel);
+		bottomPanel.add(balancePanel);
+		bottomPanel.add(maxCashPanel);
 		bottomPanel.add(stNumPanel);
 		bottomPanel.add(stNamePanel);
 		bottomPanel.add(cityPanel);
@@ -244,12 +269,10 @@ public class EmployeesPanel extends JPanel {
 	    this.add(bottomPanel, BorderLayout.SOUTH);
 	    
 	    //-------Button Action Listeners----------//
-	    
+
 		//------END of Action Listeners-----------//
 
-
-		
-	}
 	
+	}
 	
 }

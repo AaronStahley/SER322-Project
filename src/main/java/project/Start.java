@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import main.java.project.view.AccountsPanel;
+import main.java.project.view.AtmPanel;
 import main.java.project.view.EmployeesPanel;
 import main.java.project.view.HeaderPanel;
 import main.java.project.view.NavBarPanel;
@@ -36,26 +37,15 @@ public class Start {
 	private static NavBarPanel leftNav = new NavBarPanel(); 
 	
 	private static AccountsPanel accountP = new AccountsPanel();
-	private static EmployeesPanel employeesP = new EmployeesPanel(); 
+	private static EmployeesPanel employeesP = new EmployeesPanel();
+	private static AtmPanel atmP = new AtmPanel(); 
 
 	public static void main(String[] args) {
 		
 		cards.setLayout(new CardLayout());
 		cards.add(accountP, "accountP");
 		cards.add(employeesP, "employeesP");
-		
-		Connection con = null;
-		
-		try{  
-			Class.forName("com.mysql.cj.jdbc.Driver");  
-			con=DriverManager.getConnection(  
-			"jdbc:mysql://localhost:3306/bank","root","password");  
-			
-			}catch(Exception e){ System.out.println(e);} 
-		
-		   String query = "select accID, accType, balance, dateCreated " +
-                  "from " + "bank" + ".account";
-		
+		cards.add(atmP, "atmP"); 	
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
@@ -88,6 +78,11 @@ public class Start {
 		}else if(frame == 2) {
 			
 			cl.show(cards, "employeesP"); 
+			
+		}else if(frame == 3) {
+			
+			cl.show(cards, "atmP"); 
+			
 		}
 	}
 	
