@@ -85,14 +85,11 @@ public class AtmTable extends JTable {
 	        String[] columnNames = {
 	        		
 	                " Atm ID",
-	                " Branch ID",
+	                " Branch Name",
 	               	" Balance",
 	               	" Max Cash",
-	               	" Street Number",
-	               	" Street Name",
-	               	" City",
-	               	" State",
-	               	" Zip Code"
+	               	" Address",
+	               	
 	        };
 	        
 	        AtmTableModel() {
@@ -100,7 +97,7 @@ public class AtmTable extends JTable {
 	        }
 
 	        public int getColumnCount() {
-	            return 9;
+	            return 5;
 	        }
 
 	        public int getRowCount() {
@@ -124,17 +121,10 @@ public class AtmTable extends JTable {
 	            }else if(col == 2) {
 	                return atm.getBalance();
 	            }else if(col == 3) {
-	            	return atm.getMaxCash();
+	            		return atm.getMaxCash();
 	            }else if(col == 4) {
-	            	return atm.getStNum();
-	            }else if(col == 5) {
-	            	return atm.getStName();
-	            }else if(col == 6) {
-	            	return atm.getCity();
-	            }else if(col == 7) {
-	            	return atm.getState();
-	            }else if(col == 8) {
-	            	return atm.getZip(); 
+	            		return atm.getStNum() + " " +  atm.getStName() + " " + atm.getCity() + ", " + 
+	            				atm.getState() + " " + atm.getZip();
 	            }else {
 	                return atm;
 	            

@@ -3,7 +3,7 @@ package main.java.project.managers;
 public class Atm {
 	
 	private int atmID;
-	private int branchID;
+	private String branchName;
 	private int balance;
 	private int maxCash;
 	private int stNum;
@@ -15,7 +15,7 @@ public class Atm {
 	public Atm() {
 		
 		atmID = 0;
-		branchID = 0;
+		branchName = null;
 		balance = 0;
 		maxCash = 0;
 		stNum = 0;
@@ -26,11 +26,11 @@ public class Atm {
 		
 	}
 	
-	public Atm(int atmID, int branchID, int balance, int maxCash, 
+	public Atm(int atmID, String branchID, int balance, int maxCash, 
 			int stNum, String stName, String city, String state, int zip) {
 		
 		this.atmID = atmID;
-		this.branchID = branchID;
+		this.branchName = branchID;
 		this.balance = balance;
 		this.maxCash = maxCash;
 		this.stNum = stNum;
@@ -49,12 +49,12 @@ public class Atm {
 		this.atmID = atmID;
 	}
 
-	public int getBranchID() {
-		return branchID;
+	public String getBranchID() {
+		return branchName;
 	}
 
-	public void setBranchID(int branchID) {
-		this.branchID = branchID;
+	public void setBranchID(String branchID) {
+		this.branchName = branchID;
 	}
 
 	public int getBalance() {

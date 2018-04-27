@@ -353,13 +353,13 @@ public class AccountsPanel extends JPanel {
 					    new Thread(new Runnable(){
 					        @Override
 					        public void run(){
-					        	getAccountID();
-								  getAccountTypes();
-								  accountBalanceFields();
-								  getAccountFirstName();
-								  getAccountLastName();
-								  getAccountDates();
-								  accountTable.refresh();
+					        		getAccountID();
+								getAccountTypes();
+								accountBalanceFields();
+								getAccountFirstName();
+								getAccountLastName();
+								getAccountDates();
+								accountTable.refresh();
 					        }
 					    }).start();
 					

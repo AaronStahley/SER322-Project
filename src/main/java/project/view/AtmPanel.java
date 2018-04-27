@@ -5,17 +5,22 @@ import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import main.java.project.managers.AccountsManager;
+import main.java.project.managers.AtmManager;
 import main.java.project.tables.AtmTable;
 import main.java.project.tables.EmployeeTable;
 
@@ -23,10 +28,11 @@ public class AtmPanel extends JPanel{
 	
 	private JPanel bottomPanel = new JPanel();
 	private JPanel atmIdPanel = new JPanel(); 
-	private JPanel branchIdPanel = new JPanel(); 
+	private JPanel branchNamePanel = new JPanel(); 
 	private JPanel balancePanel = new JPanel();
 	private JPanel balanceEqBPanel = new JPanel(); 
 	private JPanel maxCashPanel = new JPanel(); 
+	private JPanel maxCashBPanel = new JPanel(); 
 	private JPanel stNumPanel = new JPanel(); 
 	private JPanel stNamePanel = new JPanel(); 
 	private JPanel cityPanel = new JPanel();
@@ -35,7 +41,7 @@ public class AtmPanel extends JPanel{
 	private JPanel buttonPanel = new JPanel();
 
 	private JLabel atmIdLbl = new JLabel(); 
-	private JLabel branchIdLbl = new JLabel();
+	private JLabel branchNameLbl = new JLabel();
 	private JLabel balanceLbl = new JLabel();
 	private JLabel maxCashLbl = new JLabel();
 	private JLabel stNumLbl = new JLabel();
@@ -45,7 +51,7 @@ public class AtmPanel extends JPanel{
 	private JLabel zipLbl = new JLabel();
 
 	private JTextField atmIdField = new JTextField();
-	private JTextField branchIdField = new JTextField(); 
+	private JTextField branchNameField = new JTextField(); 
 	private JTextField balanceField = new JTextField();
 	private JTextField maxCashField = new JTextField();
 	private JTextField stNumField = new JTextField();
@@ -57,6 +63,8 @@ public class AtmPanel extends JPanel{
 	//private JCheckBox sortDescendingB = new JCheckBox();
 	private JCheckBox balanceLessB = new JCheckBox();
 	private JCheckBox balanceGreaterB = new JCheckBox();
+	private JCheckBox maxCashLessB = new JCheckBox();
+	private JCheckBox maxCashGreaterB = new JCheckBox();
 	
 	private JScrollPane scrollPane = new JScrollPane();
 	
@@ -90,8 +98,8 @@ public class AtmPanel extends JPanel{
 		atmIdPanel.setLayout(new FlowLayout());
 		atmIdPanel.setBackground(Color.WHITE);
 		
-		branchIdPanel.setLayout(new FlowLayout());
-		branchIdPanel.setBackground(Color.WHITE);
+		branchNamePanel.setLayout(new FlowLayout());
+		branchNamePanel.setBackground(Color.WHITE);
 		
 		balancePanel.setLayout(new FlowLayout());
 		balancePanel.setBackground(Color.WHITE);
@@ -102,6 +110,10 @@ public class AtmPanel extends JPanel{
 		
 		maxCashPanel.setLayout(new FlowLayout());
 		maxCashPanel.setBackground(Color.WHITE);
+		
+		maxCashBPanel.setLayout(new BorderLayout());
+		maxCashBPanel.setPreferredSize(new Dimension(50,55));
+		maxCashBPanel.setBackground(Color.white);
 		
 		stNumPanel.setLayout(new FlowLayout());
 		stNumPanel.setBackground(Color.WHITE);
@@ -134,16 +146,16 @@ public class AtmPanel extends JPanel{
 		atmIdPanel.add(atmIdLbl);
 		atmIdPanel.add(atmIdField);
 		
-		branchIdLbl.setText("Branch ID:");
-		branchIdLbl.setFont(new java.awt.Font("Dialog", 1, 20));
-		branchIdLbl.setPreferredSize(new Dimension(105, 30));
+		branchNameLbl.setText("Branch Name:");
+		branchNameLbl.setFont(new java.awt.Font("Dialog", 1, 20));
+		branchNameLbl.setPreferredSize(new Dimension(150, 30));
 		
-		branchIdField.setText(null);
-		branchIdField.setFont(new java.awt.Font("Dialog", 1, 18));
-		branchIdField.setPreferredSize(new Dimension(150,30));
+		branchNameField.setText(null);
+		branchNameField.setFont(new java.awt.Font("Dialog", 1, 18));
+		branchNameField.setPreferredSize(new Dimension(150,30));
 		
-		branchIdPanel.add(branchIdLbl);
-		branchIdPanel.add(branchIdField);
+		branchNamePanel.add(branchNameLbl);
+		branchNamePanel.add(branchNameField);
 		
 		balanceLbl.setText("Balance:");
 		balanceLbl.setFont(new java.awt.Font("Dialog", 1, 20));
@@ -183,12 +195,31 @@ public class AtmPanel extends JPanel{
 		maxCashField.setFont(new java.awt.Font("Dialog", 1, 18));
 		maxCashField.setPreferredSize(new Dimension(150,30));
 		
+		maxCashGreaterB.setText(">");
+		maxCashGreaterB.setFont(new java.awt.Font("Dialog", 1, 18));
+		maxCashGreaterB.setMnemonic(KeyEvent.VK_C); 
+		maxCashGreaterB.setSelected(false);
+		maxCashGreaterB.setHorizontalTextPosition(SwingConstants.LEFT);
+		maxCashGreaterB.setFocusPainted(false);
+		maxCashGreaterB.setBackground(Color.WHITE);
+		
+		maxCashLessB.setText("<");
+		maxCashLessB.setFont(new java.awt.Font("Dialog", 1, 18));
+		maxCashLessB.setMnemonic(KeyEvent.VK_C); 
+		maxCashLessB.setSelected(false);
+		maxCashLessB.setHorizontalTextPosition(SwingConstants.LEFT);
+		maxCashLessB.setFocusPainted(false);
+		maxCashLessB.setBackground(Color.WHITE);
+		
+		maxCashBPanel.add(maxCashGreaterB, BorderLayout.NORTH);
+		maxCashBPanel.add(maxCashLessB, BorderLayout.SOUTH);
 		maxCashPanel.add(maxCashLbl);
 		maxCashPanel.add(maxCashField);
+		maxCashPanel.add(maxCashBPanel);
 		
 		stNumLbl.setText("Street Number:");
 		stNumLbl.setFont(new java.awt.Font("Dialog", 1, 20));
-		stNumLbl.setPreferredSize(new Dimension(150, 30));
+		stNumLbl.setPreferredSize(new Dimension(160, 30));
 		
 		stNumField.setText(null);
 		stNumField.setFont(new java.awt.Font("Dialog", 1, 18));
@@ -255,7 +286,7 @@ public class AtmPanel extends JPanel{
 	    //--------End of Bottom Panel Attributes ----------//
 
 		bottomPanel.add(atmIdPanel);
-		bottomPanel.add(branchIdPanel);
+		bottomPanel.add(branchNamePanel);
 		bottomPanel.add(balancePanel);
 		bottomPanel.add(maxCashPanel);
 		bottomPanel.add(stNumPanel);
@@ -269,10 +300,199 @@ public class AtmPanel extends JPanel{
 	    this.add(bottomPanel, BorderLayout.SOUTH);
 	    
 	    //-------Button Action Listeners----------//
+	    
+	    submitB.addActionListener(new ActionListener() { 
+			  public void actionPerformed(ActionEvent e) {
+				  
+				  //Displays an error if the fields are blank.
+				  if(isFieldsEmpty() == true) {
+					  errorPopUpBox("Please Enter a value in one of the search fields","Error");
+				  }else {
+					  
+					    new Thread(new Runnable(){
+					        @Override
+					        public void run(){
+					        	
+					        		getAtmId();
+					        		getAtmBranchName();
+					        		getBalance();
+					        		getMaxCash();
+					        		getAtmStNum();
+					        		getAtmStName();
+					        		getAtmCity();
+					        		getAtmState();
+					        		getAtmZip();
+					        		atmTable.refresh();
+					        }
+					    }).start();
+					
+				  }	  
+			  } 
+			});
+	    
+	    balanceGreaterB.addActionListener(new ActionListener() { 
+			  public void actionPerformed(ActionEvent e) {
+				  if(balanceGreaterB.isSelected() == true) {
+					  balanceLessB.setSelected(false);
+				  }
+			  } 
+		});
+		
+	    balanceLessB.addActionListener(new ActionListener() { 
+			  public void actionPerformed(ActionEvent e) {
+				  if(balanceLessB.isSelected() == true) {
+					  balanceGreaterB.setSelected(false);
+				  }
+			  } 
+		});
+	    
+	    this.maxCashGreaterB.addActionListener(new ActionListener() { 
+			  public void actionPerformed(ActionEvent e) {
+				  if(maxCashGreaterB.isSelected() == true) {
+					  maxCashLessB.setSelected(false);
+				  }
+			  } 
+		});
+		
+	    maxCashLessB.addActionListener(new ActionListener() { 
+			  public void actionPerformed(ActionEvent e) {
+				  if(maxCashLessB.isSelected() == true) {
+					  maxCashGreaterB.setSelected(false);
+				  }
+			  } 
+		});
 
 		//------END of Action Listeners-----------//
 
 	
+	}
+	
+	/**
+	 * @author aaronstahley 04/23/2018
+	 * Checks to see if text fields are empty. 
+	 * @return
+	 */
+	public boolean isFieldsEmpty() {
+		
+		if(atmIdField.getText().equals("") && branchNameField.getText().equals("") && balanceField.getText().equals("")
+				&& maxCashField.getText().equals("") && maxCashField.getText().equals("") && stNumField.getText().equals("")
+				&& stNameField.getText().equals("") && cityField.getText().equals("") && statesField.getText().equals("") 
+				&& zipField.getText().equals("")) {
+			return true; 
+		}
+		
+		return false; 
+	}
+	
+	public void clearAllFields() {
+		atmIdField.setText("");
+		branchNameField.setText("");
+		balanceField.setText("");
+		maxCashField.setText("");
+		stNumField.setText("");
+		stNameField.setText("");
+		cityField.setText("");
+		statesField.setText("");
+		zipField.setText("");
+		
+		this.balanceGreaterB.setSelected(false);
+		this.balanceLessB.setSelected(false);
+		this.maxCashGreaterB.setSelected(false);
+		this.maxCashLessB.setSelected(false);
+
+		AtmManager.populateFromSQL();
+		atmTable.refresh();
+
+	}
+	
+	public void getAtmId() {
+		if(atmIdField.getText().equals("")) {
+			
+		}else {
+			AtmManager.getAtmId(Integer.parseInt(atmIdField.getText()));
+		}
+	}
+	
+	public void getAtmBranchName() {
+		if(branchNameField.getText().equals("")) {
+			
+		}else {
+			AtmManager.getAtmBranchName(branchNameField.getText());
+		}
+	}
+	
+	public void getBalance() {
+		if(balanceField.getText().equals("")) {
+			
+		}else if(balanceLessB.isSelected() == true) {
+			AtmManager.getBalanceBellow(Integer.parseInt(balanceField.getText()));
+		}else if(balanceGreaterB.isSelected() == true) {
+			AtmManager.getBalanceAbove(Integer.parseInt(balanceField.getText()));
+		}else {
+			AtmManager.getBalanceAt(Integer.parseInt(balanceField.getText()));
+
+		}
+	}
+	
+	public void getMaxCash() {
+		if(maxCashField.getText().equals("")) {
+			
+		}else if(maxCashLessB.isSelected() == true) {
+			AtmManager.getMaxCashBellow(Integer.parseInt(maxCashField.getText()));
+		}else if(maxCashGreaterB.isSelected() == true) {
+			AtmManager.getMaxCashAbove(Integer.parseInt(maxCashField.getText()));
+		}else {
+			AtmManager.getMaxCashAt(Integer.parseInt(maxCashField.getText()));
+
+		}
+	}
+	
+	public void getAtmStNum() {
+		if(stNumField.getText().equals("")) {
+			
+		}else {
+			AtmManager.getAtmStNum(Integer.parseInt(stNumField.getText()));
+		}
+	}
+	
+	public void getAtmStName() {
+		if(stNameField.getText().equals("")) {
+			
+		}else {
+			AtmManager.getAtmStName(stNameField.getText());
+		}
+	}
+	
+	public void getAtmCity() {
+		if(cityField.getText().equals("")) {
+			
+		}else {
+			AtmManager.getAtmCity(cityField.getText());
+		}
+	}
+
+	public void getAtmState() {
+		if(statesField.getText().equals("")) {
+			
+		}else {
+			AtmManager.getAtmState(statesField.getText());
+		}
+	}
+	
+	public void getAtmZip() {
+		if(zipField.getText().equals("")) {
+			
+		}else {
+			AtmManager.getAtmZip(Integer.parseInt(zipField.getText()));
+		}
+	}
+	
+	
+	
+	public static void errorPopUpBox(String infoMessage, String titleBar)
+	{
+		JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " +
+				titleBar, JOptionPane.ERROR_MESSAGE);
 	}
 	
 }
