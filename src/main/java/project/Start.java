@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 
 import main.java.project.view.AccountsPanel;
 import main.java.project.view.AtmPanel;
+import main.java.project.view.CustomersPanel;
 import main.java.project.view.EmployeesPanel;
 import main.java.project.view.HeaderPanel;
 import main.java.project.view.NavBarPanel;
@@ -31,6 +32,8 @@ public class Start {
 	
 	static JFrame frame = new JFrame("Bank App");
 	
+	
+
 	private static JPanel cards = new JPanel(); 
 	
 	private static HeaderPanel header = new HeaderPanel(); 
@@ -39,13 +42,16 @@ public class Start {
 	private static AccountsPanel accountP = new AccountsPanel();
 	private static EmployeesPanel employeesP = new EmployeesPanel();
 	private static AtmPanel atmP = new AtmPanel(); 
+	private static CustomersPanel customersP = new CustomersPanel(); 
+
 
 	public static void main(String[] args) {
-		
+				
 		cards.setLayout(new CardLayout());
 		cards.add(accountP, "accountP");
 		cards.add(employeesP, "employeesP");
-		cards.add(atmP, "atmP"); 	
+		cards.add(atmP, "atmP"); 
+		cards.add(customersP, "customersP");
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
@@ -83,6 +89,9 @@ public class Start {
 			
 			cl.show(cards, "atmP"); 
 			
+		}else if(frame == 4) {
+			
+			cl.show(cards, "customersP");
 		}
 	}
 	

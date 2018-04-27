@@ -5,31 +5,37 @@ import java.sql.Date;
 public class Employee {
 	
 	private int empID;
-	private int SSN;
+	private String SSN;
 	private String fName;
 	private String lName;
-	private String stNum;
+	private int stNum;
 	private String stName;
 	private String city;
 	private String states;
 	private int zip; 
+	private String email;
+	private String position;
+	private String branchName; 
 	
 	public Employee() {
 		
 		empID = 0;
-		SSN = 0;
+		SSN = null;
 		fName = null;
 		lName = null;
-		stNum = null;
+		stNum = 0;
 		stName = null;
 		city = null;
 		states = null;
 		zip = 0; 
+		email = null; 
+		position = null;
+		branchName = null; 
 	}
 	
-	public Employee(int empID, int SSN, String fName,
-			String lName, String stName,String stNum, String city, 
-			String states, int zip) {
+	public Employee(int empID, String SSN, String fName,
+			String lName, int stNum,String stName, String city, 
+			String states, int zip, String email, String position, String branchName) {
 		
 		this.empID = empID;
 		this.SSN = SSN;
@@ -40,10 +46,29 @@ public class Employee {
 		this.city = city;
 		this.states = states;
 		this.zip = zip; 
+		this.email = email;
+		this.position = position;
+		this.branchName = branchName; 
 	
 	}
 
 	
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
+	public String getBranchName() {
+		return branchName;
+	}
+
+	public void setBranchName(String branchName) {
+		this.branchName = branchName;
+	}
+
 	public int getEmpID() {
 		return empID;
 	}
@@ -52,11 +77,11 @@ public class Employee {
 		this.empID = empID;
 	}
 
-	public int getSSN() {
+	public String getSSN() {
 		return SSN;
 	}
 
-	public void setSSN(int sSN) {
+	public void setSSN(String sSN) {
 		SSN = sSN;
 	}
 
@@ -76,11 +101,11 @@ public class Employee {
 		this.lName = lName;
 	}
 	
-	public String getStNum() {
+	public int getStNum() {
 		return stNum;
 	}
 
-	public void setStNum(String stNum) {
+	public void setStNum(int stNum) {
 		this.stNum = stNum; 
 	}
 	
@@ -114,6 +139,14 @@ public class Employee {
 
 	public void setZip(int zip) {
 		this.zip = zip;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email; 
 	}
 
 

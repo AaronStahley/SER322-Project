@@ -28,8 +28,9 @@ public class AccountsManager {
 		accounts.clear();
 
 		
-		String query = "select accID, accType, balance, dateCreated " +
-	               "from " + "ser322" + ".account";
+		String query = "select account.accID, accType, balance, dateCreated, fName, lName " + 
+	               "from  ser322.account,ser322.customer " + 
+	               "WHERE  customer.accID = account.accID";
 		 	
 		try {
 	        Statement stmt = con.getConnection().createStatement();
@@ -37,7 +38,7 @@ public class AccountsManager {
 	        while (rs.next()) {
 	        	
 	        	accounts.addElement(new Account(rs.getInt("accID"),rs.getString("accType"),
-	        			 rs.getFloat("balance"),rs.getDate("dateCreated")));
+	        			 rs.getFloat("balance"),rs.getDate("dateCreated"), rs.getString("fName"), rs.getString("lName")));
 	        
 	        }
 	 
@@ -54,9 +55,12 @@ public class AccountsManager {
 	public static void getAcountsGreater(int value) {
 		
 		accounts.clear();
+		
+		String query = "select account.accID, accType, balance, dateCreated, fName, lName " + 
+	               "from  ser322.account,ser322.customer " + 
+	               "WHERE  customer.accID = account.accID AND balance >" + value;
 
-		String query = "SELECT accID, accType, balance, dateCreated " +
-	               "FROM " + "ser322" + ".account Where balance >" + value;
+		
 
 		try {
 			
@@ -64,7 +68,7 @@ public class AccountsManager {
 		    ResultSet rs = stmt.executeQuery(query);
 	        while (rs.next()) {
 	        	accounts.addElement(new Account(rs.getInt("accID"),rs.getString("accType"),
-	        			 rs.getFloat("balance"),rs.getDate("dateCreated")));
+	        			 rs.getFloat("balance"),rs.getDate("dateCreated"), rs.getString("fName"), rs.getString("lName")));
 	        
 	        }
 	     
@@ -83,8 +87,9 @@ public class AccountsManager {
 		
 		accounts.clear();
 
-		String query = "SELECT accID, accType, balance, dateCreated " +
-	               "FROM " + "ser322" + ".account Where balance <" + value;
+		String query = "select account.accID, accType, balance, dateCreated, fName, lName " + 
+	               "from  ser322.account,ser322.customer " + 
+	               "WHERE  customer.accID = account.accID AND balance <" + value;
 
 		try {
 			
@@ -92,7 +97,7 @@ public class AccountsManager {
 		    ResultSet rs = stmt.executeQuery(query);
 	        while (rs.next()) {
 	        	accounts.addElement(new Account(rs.getInt("accID"),rs.getString("accType"),
-	        			 rs.getFloat("balance"),rs.getDate("dateCreated")));
+	        			 rs.getFloat("balance"),rs.getDate("dateCreated"), rs.getString("fName"), rs.getString("lName")));
 	        
 	        }
 	     
@@ -110,9 +115,10 @@ public class AccountsManager {
 	public static void getAcountsBalance(int value) {
 			
 			accounts.clear();
-	
-			String query = "SELECT accID, accType, balance, dateCreated " +
-		               "FROM " + "ser322" + ".account Where balance =" + value;
+
+			String query = "select account.accID, accType, balance, dateCreated, fName, lName " + 
+		               "from  ser322.account,ser322.customer " + 
+		               "WHERE  customer.accID = account.accID AND balance =" + value;
 	
 			try {
 				
@@ -120,7 +126,7 @@ public class AccountsManager {
 			    ResultSet rs = stmt.executeQuery(query);
 		        while (rs.next()) {
 		        	accounts.addElement(new Account(rs.getInt("accID"),rs.getString("accType"),
-		        			 rs.getFloat("balance"),rs.getDate("dateCreated")));
+		        			 rs.getFloat("balance"),rs.getDate("dateCreated"), rs.getString("fName"), rs.getString("lName")));
 		        
 		        }
 		     
@@ -142,8 +148,9 @@ public class AccountsManager {
 		
 		accounts.clear();
 
-		String query = "SELECT accID, accType, balance, dateCreated " +
-	               "FROM " + "ser322" + ".account Where accID =" + accID;
+		String query = "select account.accID, accType, balance, dateCreated, fName, lName " + 
+	               "from  ser322.account,ser322.customer " + 
+	               "WHERE  customer.accID = account.accID AND account.accID =" + accID;
 
 		try {
 			
@@ -151,8 +158,7 @@ public class AccountsManager {
 		    ResultSet rs = stmt.executeQuery(query);
 	        while (rs.next()) {
 	        	accounts.addElement(new Account(rs.getInt("accID"),rs.getString("accType"),
-	        			 rs.getFloat("balance"),rs.getDate("dateCreated")));
-	        
+	        			 rs.getFloat("balance"),rs.getDate("dateCreated"), rs.getString("fName"), rs.getString("lName")));
 	        }
 	     
 	    } catch (SQLException e ) {
@@ -169,9 +175,10 @@ public class AccountsManager {
 	public static void getAcountsWithType(String accType) {
 			
 			accounts.clear();
-	
-			String query = "SELECT accID, accType, balance, dateCreated " +
-		               "FROM " + "ser322" + ".account Where accType =" + "'" + accType + "'";
+			
+			String query = "select account.accID, accType, balance, dateCreated, fName, lName " + 
+		               "from  ser322.account,ser322.customer " + 
+		               "WHERE  customer.accID = account.accID AND accType =" + "'" + accType + "'";
 	
 			try {
 				
@@ -179,12 +186,70 @@ public class AccountsManager {
 			    ResultSet rs = stmt.executeQuery(query);
 		        while (rs.next()) {
 		        	accounts.addElement(new Account(rs.getInt("accID"),rs.getString("accType"),
-		        			 rs.getFloat("balance"),rs.getDate("dateCreated")));
+		        			 rs.getFloat("balance"),rs.getDate("dateCreated"), rs.getString("fName"), rs.getString("lName")));
 		        
 		        }
 		     
 		    } catch (SQLException e ) {
 		    	System.out.println("QUERY WRONG - getAcountsWithType");
+		    }
+	
+		}
+	
+	/**
+	 * Returns all accounts with first name type matching the string input. 
+	 * @author aaronstahley 04/23/2018
+	 * @param firstName account Name 
+	 */
+	public static void getAcountsWithfName(String firstName) {
+			
+			accounts.clear();
+			
+			String query = "select account.accID, accType, balance, dateCreated, fName, lName " + 
+		               "from  ser322.account,ser322.customer " + 
+		               "WHERE  customer.accID = account.accID AND fName =" + "'" + firstName + "'";
+	
+			try {
+				
+				Statement stmt = con.getConnection().createStatement();
+			    ResultSet rs = stmt.executeQuery(query);
+		        while (rs.next()) {
+		        	accounts.addElement(new Account(rs.getInt("accID"),rs.getString("accType"),
+		        			 rs.getFloat("balance"),rs.getDate("dateCreated"), rs.getString("fName"), rs.getString("lName")));
+		        
+		        }
+		     
+		    } catch (SQLException e ) {
+		    	System.out.println("QUERY WRONG - getAcountsWithfName");
+		    }
+	
+		}
+	
+	/**
+	 * Returns all accounts with last name type matching the string input. 
+	 * @author aaronstahley 04/23/2018
+	 * @param firstName account Name 
+	 */
+	public static void getAcountsWithlName(String lastName) {
+			
+			accounts.clear();
+			
+			String query = "select account.accID, accType, balance, dateCreated, fName, lName " + 
+		               "from  ser322.account,ser322.customer " + 
+		               "WHERE  customer.accID = account.accID AND lName =" + "'" + lastName + "'";
+	
+			try {
+				
+				Statement stmt = con.getConnection().createStatement();
+			    ResultSet rs = stmt.executeQuery(query);
+		        while (rs.next()) {
+		        	accounts.addElement(new Account(rs.getInt("accID"),rs.getString("accType"),
+		        			 rs.getFloat("balance"),rs.getDate("dateCreated"), rs.getString("fName"), rs.getString("lName")));
+		        
+		        }
+		     
+		    } catch (SQLException e ) {
+		    	System.out.println("QUERY WRONG - getAcountsWithlName");
 		    }
 	
 		}
@@ -200,9 +265,10 @@ public class AccountsManager {
 	    java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 		
 		accounts.clear();
-
-		String query = "SELECT accID, accType, balance, dateCreated " +
-	               "FROM " + "ser322" + ".account Where dateCreated >" + "'" + sqlDate + "'";
+		
+		String query = "select account.accID, accType, balance, dateCreated, fName, lName " + 
+	               "from  ser322.account,ser322.customer " + 
+	               "WHERE  customer.accID = account.accID AND dateCreated >" + "'" + sqlDate + "'";
 
 		try {
 			
@@ -210,7 +276,7 @@ public class AccountsManager {
 		    ResultSet rs = stmt.executeQuery(query);
 	        while (rs.next()) {
 	        	accounts.addElement(new Account(rs.getInt("accID"),rs.getString("accType"),
-	        			 rs.getFloat("balance"),rs.getDate("dateCreated")));
+	        			 rs.getFloat("balance"),rs.getDate("dateCreated"), rs.getString("fName"), rs.getString("lName")));
 	        
 	        }
 	     
@@ -232,8 +298,9 @@ public class AccountsManager {
 			
 			accounts.clear();
 	
-			String query = "SELECT accID, accType, balance, dateCreated " +
-		               "FROM " + "ser322" + ".account Where dateCreated <" + "'" + sqlDate + "'";
+			String query = "select account.accID, accType, balance, dateCreated, fName, lName " + 
+		               "from  ser322.account,ser322.customer " + 
+		               "WHERE  customer.accID = account.accID AND dateCreated <" + "'" + sqlDate + "'";
 	
 			try {
 				
@@ -241,8 +308,7 @@ public class AccountsManager {
 			    ResultSet rs = stmt.executeQuery(query);
 		        while (rs.next()) {
 		        	accounts.addElement(new Account(rs.getInt("accID"),rs.getString("accType"),
-		        			 rs.getFloat("balance"),rs.getDate("dateCreated")));
-		        
+		        			 rs.getFloat("balance"),rs.getDate("dateCreated"), rs.getString("fName"), rs.getString("lName")));
 		        }
 		     
 		    } catch (SQLException e ) {
@@ -263,8 +329,9 @@ public class AccountsManager {
 		
 		accounts.clear();
 
-		String query = "SELECT accID, accType, balance, dateCreated " +
-	               "FROM " + "ser322" + ".account Where dateCreated =" + "'" + sqlDate + "'";
+		String query = "select account.accID, accType, balance, dateCreated, fName, lName " + 
+	               "from  ser322.account,ser322.customer " + 
+	               "WHERE  customer.accID = account.accID AND dateCreated =" + "'" + sqlDate + "'";
 
 		try {
 			
@@ -272,12 +339,38 @@ public class AccountsManager {
 		    ResultSet rs = stmt.executeQuery(query);
 	        while (rs.next()) {
 	        	accounts.addElement(new Account(rs.getInt("accID"),rs.getString("accType"),
-	        			 rs.getFloat("balance"),rs.getDate("dateCreated")));
+	        			 rs.getFloat("balance"),rs.getDate("dateCreated"), rs.getString("fName"), rs.getString("lName")));
 	        
 	        }
 	     
 	    } catch (SQLException e ) {
 	    	System.out.println("QUERY WRONG - getAccountCreatedOn");
+	    }
+
+	}
+	
+	public static void getDescBalance() {
+		
+				
+		accounts.clear();
+
+		String query = "select account.accID, accType, balance, dateCreated, fName, lName " + 
+	               "from  ser322.account,ser322.customer " + 
+	               "WHERE  customer.accID = account.accID " +
+	               "ORDER BY balance ASC";
+
+		try {
+			
+			Statement stmt = con.getConnection().createStatement();
+		    ResultSet rs = stmt.executeQuery(query);
+	        while (rs.next()) {
+	        	accounts.addElement(new Account(rs.getInt("accID"),rs.getString("accType"),
+	        			 rs.getFloat("balance"),rs.getDate("dateCreated"), rs.getString("fName"), rs.getString("lName")));
+	        
+	        }
+	     
+	    } catch (SQLException e ) {
+	    	System.out.println("QUERY WRONG - getDescBalance");
 	    }
 
 	}

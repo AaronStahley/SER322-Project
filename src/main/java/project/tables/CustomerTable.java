@@ -82,17 +82,14 @@ public class CustomerTable extends JTable{
 	        String[] columnNames = {
 	        			
 	                " SSN",
-	                " Account ID",
+	                " Acc ID",
 	               	" First Name",
 	               	" Last Name",
 	               	" Date Joined",
-	               	" Date Of Birth",
-	               	" Street Number",
-	               	" Street Name",
-	               	" City",
-	               	" State",
-	               	" Zip Code",
+	               	" Birth Date",
+	               	" Address",
 	               	" Email"
+	               	
 	        };
 	        
 	        CustomerTableModel() {
@@ -100,7 +97,7 @@ public class CustomerTable extends JTable{
 	        }
 	
 	        public int getColumnCount() {
-	            return 12;
+	            return 8;
 	        }
 	
 	        public int getRowCount() {
@@ -130,17 +127,10 @@ public class CustomerTable extends JTable{
 	            }else if(col == 5) {
 	            		return customer.getDob();
 	            }else if(col == 6) {
-	            		return customer.getStNum();
+	            		return customer.getStNum() + " " + customer.getStName() + " " + customer.getCity() + 
+	            				", " + customer.getStates() + " " + customer.getZip();
 	            }else if(col == 7) {
-	            		return customer.getStName();
-	            }else if(col == 8) {
-	            		return customer.getCity();
-	            }else if(col == 9) {
-	            		return customer.getStates();
-	            }else if(col == 10) {
-	            		return customer.getZip();
-	            }else if(col == 11) {
-	            		return customer.getEmail();
+	            		return customer.getEmail(); 
 	            }else {
 	                return customer;        
 	            }

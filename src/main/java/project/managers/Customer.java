@@ -2,9 +2,10 @@ package main.java.project.managers;
 
 import java.sql.Date;
 
+
 public class Customer {
 	
-	private int SSN; 
+	private String SSN; 
 	private int accID;
 	private String fName;
 	private String lName;
@@ -19,7 +20,7 @@ public class Customer {
 	
 	public Customer() {
 		
-		SSN = 0; 
+		SSN = null; 
 		accID = 0;
 		fName = null;
 		lName = null;
@@ -34,8 +35,8 @@ public class Customer {
 		
 	}
 	
-	public Customer(int SSN, int accID, String fName, String lName, Date dateJoined,
-			Date dob, int stNum, String stName, String city, String states, int zip) {
+	public Customer(String SSN, int accID, String fName, String lName, Date dateJoined,
+			Date dob, int stNum, String stName, String city, String states, int zip, String email) {
 		
 		this.SSN = SSN;
 		this.accID = accID;
@@ -52,12 +53,12 @@ public class Customer {
 		
 	}
 
-	public int getSSN() {
+	public String getSSN() {
 		return SSN;
 	}
 
-	public void setSSN(int sSN) {
-		SSN = sSN;
+	public void setSSN(String SSN) {
+		this.SSN = SSN;
 	}
 
 	public int getAccID() {

@@ -84,6 +84,7 @@ public class AccountTable extends JTable {
                 " Account ID",
                 " Account Type",
                	" Balance",
+               	" Account Holder",
                	" Date Opened"
         };
         
@@ -92,7 +93,7 @@ public class AccountTable extends JTable {
         }
 
         public int getColumnCount() {
-            return 4;
+            return 5;
         }
 
         public int getRowCount() {
@@ -112,11 +113,12 @@ public class AccountTable extends JTable {
             if(col == 0) {
                 return account.getAccID();
             } else if(col == 1) {
-            	return account.getAccType();
+            		return account.getAccType();
             }else if(col == 2) {
                 return account.getBalance();
-
             }else if(col == 3) {
+            		return account.getfName() + " " + account.getlName(); 
+            }else if(col == 4) {
             	return account.getDateCreated();
             }
             	else {

@@ -49,6 +49,22 @@ public class EmployeeTable extends JTable{
     	
     	//Vector of accounts
     	employees = (Vector) EmployeesManager.getEmployees();
+    	
+    	
+    	getColumnModel().getColumn(0).setPreferredWidth(60);
+    getColumnModel().getColumn(0).setMaxWidth(60);
+    
+    getColumnModel().getColumn(1).setPreferredWidth(130);
+    getColumnModel().getColumn(1).setMaxWidth(130);
+    
+    getColumnModel().getColumn(2).setPreferredWidth(200);
+    getColumnModel().getColumn(2).setMaxWidth(200);
+    
+    getColumnModel().getColumn(3).setPreferredWidth(200);
+    getColumnModel().getColumn(3).setMaxWidth(200);
+    
+    getColumnModel().getColumn(4).setPreferredWidth(160);
+    getColumnModel().getColumn(4).setMaxWidth(160);
     
     	
         clearSelection();
@@ -86,11 +102,10 @@ public class EmployeeTable extends JTable{
                 " SSN",
                	" First Name",
                	" Last Name",
-               	" Street Number",
-               	" Street Name",
-               	" City",
-               	" State",
-               	" Zip Code"
+               	" Position",
+               	" Works At", 
+               	" Address",      
+               	" Email"
         };
         
         EmployeeTableModel() {
@@ -98,7 +113,7 @@ public class EmployeeTable extends JTable{
         }
 
         public int getColumnCount() {
-            return 9;
+            return 8;
         }
 
         public int getRowCount() {
@@ -122,18 +137,17 @@ public class EmployeeTable extends JTable{
             }else if(col == 2) {
                 return employee.getfName();
             }else if(col == 3) {
-            	return employee.getlName();
+            		return employee.getlName();
             }else if(col == 4) {
-            	return employee.getStNum();
-            }else if(col == 5) {
-            	return employee.getStName();
-            }else if(col == 6) {
-            	return employee.getCity();
-            }else if(col == 7) {
-            	return employee.getStates();
-            }else if(col == 8) {
-            	return employee.getZip();
+            		return employee.getPosition(); 
+            }else if(col == 5 ) {
+            		return employee.getBranchName(); 
+            }else if (col == 6) {
+        			return employee.getStNum() + " " + employee.getStName() + " " + employee.getCity() + ", " + employee.getStates() + " " + employee.getZip();
+            }else if (col == 7) {
+        			return employee.getEmail(); 
             }else {
+
                 return employee;
             
             }

@@ -39,6 +39,8 @@ public class AccountsPanel extends JPanel {
 	private JPanel accIdPanel = new JPanel(); 
 	private JPanel accTypePanel = new JPanel(); 
 	private JPanel balancePanel = new JPanel();
+	private JPanel fNamePanel = new JPanel();
+	private JPanel lNamePanel = new JPanel(); 
 	private JPanel dateCreatedPanel = new JPanel(); 
 	private JPanel sortButtonsPanel = new JPanel(); 
 	private JPanel buttonPanel = new JPanel();
@@ -48,14 +50,18 @@ public class AccountsPanel extends JPanel {
 	private JLabel accIdLbl = new JLabel(); 
 	private JLabel accTypeLbl = new JLabel();
 	private JLabel balanceLbl = new JLabel();
+	private JLabel fNameLbl = new JLabel(); 
+	private JLabel lNameLbl = new JLabel(); 
 	private JLabel dateCreatedLbl = new JLabel();
 
 	private JTextField accIdField = new JTextField();
 	private JTextField accTypeField = new JTextField(); 
 	private JTextField balanceField = new JTextField();
+	private JTextField fNameField = new JTextField(); 
+	private JTextField lNameField = new JTextField(); 
 	private JTextField dateCreatedField = new JTextField();
 	
-	private JCheckBox sortDescendingB = new JCheckBox();
+	private JCheckBox sortBalanceB = new JCheckBox();
 	private JCheckBox lessThanB = new JCheckBox();
 	private JCheckBox greaterThanB = new JCheckBox();
 	private JCheckBox beforeDateB = new JCheckBox();
@@ -87,7 +93,7 @@ public class AccountsPanel extends JPanel {
 		fl.setVgap(10); // Gap of components vertical
 		
 		
-		bottomPanel.setPreferredSize(new Dimension(100,150));
+		bottomPanel.setPreferredSize(new Dimension(100,210));
 		bottomPanel.setLayout(fl);
 		bottomPanel.setBackground(Color.WHITE);
 		bottomPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
@@ -107,6 +113,12 @@ public class AccountsPanel extends JPanel {
 		
 		dateCreatedPanel.setLayout(new FlowLayout());
 		dateCreatedPanel.setBackground(Color.WHITE);
+		
+		fNamePanel.setLayout(new FlowLayout());
+		fNamePanel.setBackground(Color.WHITE);
+		
+		lNamePanel.setLayout(new FlowLayout());
+		lNamePanel.setBackground(Color.WHITE);
 		
 		beforeAfterPanel.setLayout(new BorderLayout());
 		beforeAfterPanel.setPreferredSize(new Dimension(50,55));
@@ -173,6 +185,28 @@ public class AccountsPanel extends JPanel {
 		balancePanel.add(balanceLbl);
 		balancePanel.add(balanceField);
 		balancePanel.add(equalityBPanel);
+		
+		fNameLbl.setText("First Name:");
+		fNameLbl.setFont(new java.awt.Font("Dialog", 1, 20));
+		fNameLbl.setPreferredSize(new Dimension(120,30));
+
+		fNameField.setText(null);
+		fNameField.setFont(new java.awt.Font("Dialog", 1, 18));
+		fNameField.setPreferredSize(new Dimension(150,30));
+		
+		fNamePanel.add(fNameLbl);
+		fNamePanel.add(fNameField);
+		
+		lNameLbl.setText("Last Name:");
+		lNameLbl.setFont(new java.awt.Font("Dialog", 1, 20));
+		lNameLbl.setPreferredSize(new Dimension(120,30));
+
+		lNameField.setText(null);
+		lNameField.setFont(new java.awt.Font("Dialog", 1, 18));
+		lNameField.setPreferredSize(new Dimension(150,30));
+		
+		lNamePanel.add(lNameLbl);
+		lNamePanel.add(lNameField);
 
 		dateCreatedLbl.setText("Creation Date:");
 		dateCreatedLbl.setFont(new java.awt.Font("Dialog", 1, 20));
@@ -206,15 +240,15 @@ public class AccountsPanel extends JPanel {
 		dateCreatedPanel.add(beforeAfterPanel); 
 
 		
-		sortDescendingB.setText("Sort Descending");
-		sortDescendingB.setFont(new java.awt.Font("Dialog", 1, 18));
-	    sortDescendingB.setMnemonic(KeyEvent.VK_C); 
-	    sortDescendingB.setSelected(false);
-	    sortDescendingB.setHorizontalTextPosition(SwingConstants.LEFT);
-	    sortDescendingB.setFocusPainted(false);
-	    sortDescendingB.setBackground(Color.WHITE);
+		sortBalanceB.setText("Sort Balance");
+		sortBalanceB.setFont(new java.awt.Font("Dialog", 1, 18));
+	    sortBalanceB.setMnemonic(KeyEvent.VK_C); 
+	    sortBalanceB.setSelected(false);
+	    sortBalanceB.setHorizontalTextPosition(SwingConstants.LEFT);
+	    sortBalanceB.setFocusPainted(false);
+	    sortBalanceB.setBackground(Color.WHITE);
 	    
-	    sortButtonsPanel.add(sortDescendingB); 
+	    sortButtonsPanel.add(sortBalanceB); 
 		
 		clearB.setText("Clear All");
 		clearB.setFont(new java.awt.Font("Dialog", 1, 18));
@@ -235,6 +269,8 @@ public class AccountsPanel extends JPanel {
         bottomPanel.add(accIdPanel);
         bottomPanel.add(accTypePanel);
         bottomPanel.add(balancePanel);
+        bottomPanel.add(fNamePanel);
+        bottomPanel.add(lNamePanel);
         bottomPanel.add(dateCreatedPanel);
         bottomPanel.add(sortButtonsPanel);
         bottomPanel.add(buttonPanel); 
@@ -244,6 +280,21 @@ public class AccountsPanel extends JPanel {
 	    
 	    //-------Button Action Listeners----------//
 	    
+	    
+	    this.sortBalanceB.addActionListener(new ActionListener() { 
+			  public void actionPerformed(ActionEvent e) {
+				  
+				  if(sortBalanceB.isSelected() == true) {
+					  AccountsManager.getDescBalance();
+					  accountTable.refresh();
+				  }else {
+					  AccountsManager.populateFromSQL();
+					  accountTable.refresh();
+
+				  }
+				
+			  } 
+		});
 	    
 		greaterThanB.addActionListener(new ActionListener() { 
 			  public void actionPerformed(ActionEvent e) {
@@ -280,7 +331,14 @@ public class AccountsPanel extends JPanel {
 		
 		clearB.addActionListener(new ActionListener() { 
 			  public void actionPerformed(ActionEvent e) {
-				  clearAllFields();
+				  
+				  new Thread(new Runnable(){
+				        @Override
+				        public void run(){
+				        	getAccountID();
+							  clearAllFields();
+				        }
+				    }).start();
 			  } 
 		});
 	
@@ -292,12 +350,19 @@ public class AccountsPanel extends JPanel {
 					  errorPopUpBox("Please Enter a value in one of the search fields","Error");
 				  }else {
 					  
-					  getAccountID();
-					  getAccountTypes();
-					  accountBalanceFields();
-					  getAccountDates();
-					  accountTable.refresh();
-
+					    new Thread(new Runnable(){
+					        @Override
+					        public void run(){
+					        	getAccountID();
+								  getAccountTypes();
+								  accountBalanceFields();
+								  getAccountFirstName();
+								  getAccountLastName();
+								  getAccountDates();
+								  accountTable.refresh();
+					        }
+					    }).start();
+					
 				  }	  
 			  } 
 			});
@@ -317,7 +382,7 @@ public class AccountsPanel extends JPanel {
 	public boolean isFieldsEmpty() {
 		
 		if(accIdField.getText().equals("") && accTypeField.getText().equals("") && balanceField.getText().equals("")
-				&& dateCreatedField.getText().equals("")) {
+				&& dateCreatedField.getText().equals("") && fNameField.getText().equals("") && lNameField.getText().equals("")) {
 			return true; 
 		}
 		
@@ -332,9 +397,21 @@ public class AccountsPanel extends JPanel {
 		accIdField.setText("");
 		accTypeField.setText("");
 		balanceField.setText("");
+		fNameField.setText("");
+		lNameField.setText("");
 		dateCreatedField.setText("");
 		lessThanB.setSelected(false);
 		greaterThanB.setSelected(false);
+		
+		sortBalanceB.setSelected(false);
+		this.lessThanB.setSelected(false);
+		this.greaterThanB.setSelected(false);
+		this.afterDateB.setSelected(false);
+		this.beforeDateB.setSelected(false);
+		
+		AccountsManager.populateFromSQL();
+		accountTable.refresh();
+
 	}
 	
 	/**
@@ -386,6 +463,31 @@ public class AccountsPanel extends JPanel {
 			AccountsManager.getAcountsWithType(accTypeField.getText());
 		}
 	}
+	
+	/**
+	 * @author aaronstahley 04/23/2018
+	 * gets account types matching first name
+	 */
+	public void getAccountFirstName() {
+		if(fNameField.getText().equals("")) {
+			
+		}else {
+			AccountsManager.getAcountsWithfName(fNameField.getText());
+		}
+	}
+	
+	/**
+	 * @author aaronstahley 04/23/2018
+	 * gets account types matching last name
+	 */
+	public void getAccountLastName() {
+		if(lNameField.getText().equals("")) {
+			
+		}else {
+			AccountsManager.getAcountsWithlName(lNameField.getText());
+		}
+	}
+	
 	
 	/**
 	 * gets accounts created on date in text field. 

@@ -15,13 +15,17 @@ public class SqlConnection{
 		
 	}
 	
+
 	
 	public Connection connectToLocal(String userName, String password, String databaseName) {
 		
-		databaseName = databaseName + "?useSSL=false";
 		
+		databaseName = databaseName + "?useSSL=false";
+			
 		try{  
 			Class.forName("com.mysql.cj.jdbc.Driver");  
+			
+			
 			Connection con = DriverManager.getConnection(  
 			"jdbc:mysql://den1.mysql1.gear.host/",userName,password);  
 			isConnected = true; 
