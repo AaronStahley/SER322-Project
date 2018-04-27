@@ -322,6 +322,12 @@ public class EmployeesPanel extends JPanel {
 					        		getEmployeeLName();
 					        		getEmployeePosition();
 					        		getEmployeeWorksAt();
+					        		getEmployeeStNum();
+					        		getEmployeeStName(); 
+					        		getEmployeeCity();
+					        		getEmployeeState();
+					        		getEmployeeZip();
+					        		getEmployeeEmail();
 					        		employeeTable.refresh();
 					        }
 					    }).start();
@@ -438,6 +444,54 @@ public class EmployeesPanel extends JPanel {
 			
 		}else {
 			EmployeesManager.getEmployeeWorksAt(worksAtField.getText());
+		}
+	}
+		
+	public void getEmployeeStNum() {
+		if(stNumField.getText().equals("")) {
+			
+		}else {
+			EmployeesManager.getEmployeeStNum(Integer.parseInt(stNumField.getText()));
+		}
+	}
+	
+	public void getEmployeeStName() {
+		if(stNameField.getText().equals("")) {
+			
+		}else {
+			EmployeesManager.getEmployeeStName(stNameField.getText());
+		}
+	}
+	
+	public void getEmployeeCity() {
+		if(cityField.getText().equals("")) {
+			
+		}else {
+			EmployeesManager.getEmployeeCity(cityField.getText());
+		}
+	}
+	
+	public void getEmployeeState() {
+		if(statesField.getText().equals("")) {
+			
+		}else {
+			EmployeesManager.getEmployeeState(statesField.getText());
+		}
+	}
+	
+	public void getEmployeeZip() {
+		if(zipField.getText().equals("")) {
+			
+		}else {
+			EmployeesManager.getEmployeeZip(Integer.parseInt(zipField.getText()));
+		}
+	}
+	
+	public void getEmployeeEmail() {
+		if(emailField.getText().equals("")) {
+			
+		}else {
+			EmployeesManager.getEmployeeEmail(emailField.getText());
 		}
 	}
 	
