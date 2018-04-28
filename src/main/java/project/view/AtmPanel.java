@@ -5,11 +5,13 @@ import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -39,6 +41,8 @@ public class AtmPanel extends JPanel{
 	private JPanel statesPanel = new JPanel(); 
 	private JPanel zipPanel = new JPanel();	
 	private JPanel buttonPanel = new JPanel();
+	private JPanel topNavbarPanel = new JPanel(); 
+
 
 	private JLabel atmIdLbl = new JLabel(); 
 	private JLabel branchNameLbl = new JLabel();
@@ -65,6 +69,8 @@ public class AtmPanel extends JPanel{
 	private JCheckBox balanceGreaterB = new JCheckBox();
 	private JCheckBox maxCashLessB = new JCheckBox();
 	private JCheckBox maxCashGreaterB = new JCheckBox();
+	
+	private JButton addButton = new JButton();
 	
 	private JScrollPane scrollPane = new JScrollPane();
 	
@@ -94,6 +100,11 @@ public class AtmPanel extends JPanel{
 		bottomPanel.setLayout(fl);
 		bottomPanel.setBackground(Color.WHITE);
 		bottomPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		
+		topNavbarPanel.setPreferredSize(new Dimension(100,35));
+		topNavbarPanel.setLayout(new BorderLayout());
+		topNavbarPanel.setBackground(Color.WHITE); 
+		topNavbarPanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
 		
 		atmIdPanel.setLayout(new FlowLayout());
 		atmIdPanel.setBackground(Color.WHITE);
@@ -283,6 +294,20 @@ public class AtmPanel extends JPanel{
 		buttonPanel.add(clearB);
 		buttonPanel.add(submitB);
 		
+		addButton.setIcon(new ImageIcon(NavBarPanel.class.getResource("/Add_Icon.png")));
+		addButton.setFont(new java.awt.Font("Dialog", 1, 15));
+		addButton.setBorderPainted(false);
+		addButton.setPreferredSize(new Dimension(30, 30));
+		addButton.setOpaque(false);
+		//addButton.setBackground(new Color(151, 217, 247));
+		addButton.setMargin(new Insets(0, 5, 0, 0));
+		addButton.setToolTipText("Add Account");
+		addButton.setSelected(false);
+		addButton.setContentAreaFilled(true);
+		addButton.setFocusPainted(false); 
+		
+		topNavbarPanel.add(addButton, BorderLayout.LINE_START); 
+		
 	    //--------End of Bottom Panel Attributes ----------//
 
 		bottomPanel.add(atmIdPanel);
@@ -296,6 +321,7 @@ public class AtmPanel extends JPanel{
 		bottomPanel.add(zipPanel);
 		bottomPanel.add(buttonPanel);
 		
+        this.add(topNavbarPanel, BorderLayout.NORTH);
 		this.add(scrollPane, BorderLayout.CENTER);
 	    this.add(bottomPanel, BorderLayout.SOUTH);
 	    
@@ -359,6 +385,20 @@ public class AtmPanel extends JPanel{
 				  if(maxCashLessB.isSelected() == true) {
 					  maxCashGreaterB.setSelected(false);
 				  }
+			  } 
+		});
+	    
+	    clearB.addActionListener(new ActionListener() { 
+			  public void actionPerformed(ActionEvent e) {
+				  
+				  new Thread(new Runnable(){
+				        @Override
+				        public void run(){
+				        	
+							clearAllFields(); 
+				        		atmTable.refresh();
+				        }
+				    }).start();
 			  } 
 		});
 

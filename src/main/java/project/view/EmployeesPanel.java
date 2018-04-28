@@ -5,10 +5,12 @@ import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -38,6 +40,8 @@ public class EmployeesPanel extends JPanel {
 	private JPanel zipPanel = new JPanel();	
 	private JPanel emailPanel = new JPanel();
 	private JPanel buttonPanel = new JPanel();
+	private JPanel topNavbarPanel = new JPanel(); 
+
 
 
 	private JLabel empIdLbl = new JLabel(); 
@@ -68,6 +72,9 @@ public class EmployeesPanel extends JPanel {
 
 	//private JCheckBox sortDescendingB = new JCheckBox();
 	
+	private JButton addButton = new JButton();
+
+	
 	private JScrollPane scrollPane = new JScrollPane();
 	
 	private JButton clearB = new JButton(); 
@@ -96,6 +103,11 @@ public class EmployeesPanel extends JPanel {
 		bottomPanel.setLayout(fl);
 		bottomPanel.setBackground(Color.WHITE);
 		bottomPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		
+		topNavbarPanel.setPreferredSize(new Dimension(100,35));
+		topNavbarPanel.setLayout(new BorderLayout());
+		topNavbarPanel.setBackground(Color.WHITE); 
+		topNavbarPanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
 		
 		empIdPanel.setLayout(new FlowLayout());
 		empIdPanel.setBackground(Color.WHITE);
@@ -283,6 +295,20 @@ public class EmployeesPanel extends JPanel {
 		buttonPanel.add(clearB);
 		buttonPanel.add(submitB);
 		
+		addButton.setIcon(new ImageIcon(NavBarPanel.class.getResource("/Add_Icon.png")));
+		addButton.setFont(new java.awt.Font("Dialog", 1, 15));
+		addButton.setBorderPainted(false);
+		addButton.setPreferredSize(new Dimension(30, 30));
+		addButton.setOpaque(false);
+		//addButton.setBackground(new Color(151, 217, 247));
+		addButton.setMargin(new Insets(0, 5, 0, 0));
+		addButton.setToolTipText("Add Account");
+		addButton.setSelected(false);
+		addButton.setContentAreaFilled(true);
+		addButton.setFocusPainted(false); 
+		
+		topNavbarPanel.add(addButton, BorderLayout.LINE_START); 
+		
 	    //--------End of Bottom Panel Attributes ----------//
 
 		bottomPanel.add(empIdPanel);
@@ -299,6 +325,7 @@ public class EmployeesPanel extends JPanel {
 		bottomPanel.add(emailPanel); 
 		bottomPanel.add(buttonPanel);
 		
+        this.add(topNavbarPanel, BorderLayout.NORTH);
 		this.add(scrollPane, BorderLayout.CENTER);
 	    this.add(bottomPanel, BorderLayout.SOUTH);
 	    
