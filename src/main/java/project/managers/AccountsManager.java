@@ -4,10 +4,12 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Vector;
 
 import main.java.project.server.SqlConnection;
+import main.java.project.view.AccountsPanel;
 
 public class AccountsManager {
 	
@@ -30,7 +32,8 @@ public class AccountsManager {
 		
 		String query = "select account.accID, accType, balance, dateCreated, fName, lName " + 
 	               "from  ser322.account,ser322.customer " + 
-	               "WHERE  customer.accID = account.accID";
+	               "WHERE  customer.accID = account.accID " +
+	               "ORDER BY balance DESC";
 		 	
 		try {
 	        Statement stmt = con.getConnection().createStatement();
@@ -372,6 +375,33 @@ public class AccountsManager {
 	    } catch (SQLException e ) {
 	    	System.out.println("QUERY WRONG - getDescBalance");
 	    }
+
+	}
+	
+	public static void addAccount(String accType, float balance, String fName, String lName, float interest) {
+		
+		
+		// create a Statement from the connection
+		Statement stmt;
+		try {
+			stmt = con.getConnection().createStatement();
+			// insert the data
+			
+			java.sql.Date currentDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+
+			
+			stmt.executeUpdate("INSERT INTO ser322.account " + "VALUES (NULL, '" + accType + "', " + balance + ", '" + currentDate + "'); " +
+			"SET @last_id_in_account = Last_INSERT_ID();" + 
+			"INSERT INTO interest_rate VALUES(@last_id_in_account, (SELECT accType FROM account WHERE accID = @last_id_in_account)," + interest + ");");
+			
+		} catch (SQLException e) {
+			System.out.println("[ERROR] - Add Account Error");
+			e.printStackTrace();
+		}
+		
+		AccountsManager.populateFromSQL();
+		AccountsPanel.refreshTabel(); 
+	     
 
 	}
 		
