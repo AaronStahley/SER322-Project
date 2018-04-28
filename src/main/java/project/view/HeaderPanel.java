@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -19,8 +20,7 @@ public class HeaderPanel extends JPanel {
 		this.setPreferredSize(new Dimension(1000, 80));
 		this.setBackground(new Color(151, 217, 247));
 
-		
-		bankNameLabel.setText(" Bank Name");
+		bankNameLabel.setIcon(new ImageIcon(NavBarPanel.class.getResource("/logo.png")));
 		bankNameLabel.setFont(new java.awt.Font("Dialog", 1, 40));
 		bankNameLabel.setPreferredSize(new Dimension(1000,80));
 		
